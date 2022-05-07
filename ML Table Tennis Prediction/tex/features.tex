@@ -1,0 +1,115 @@
+\section{Feature Engineering \& Selection} \label{features}
+Rich data is valuable, however, irrelevant or redundant variables can increase both training and inference time, as well as decrease a model's performance, therefore choosing appropriate features to input into a classification model is very important.
+
+\subsection{Match Representation}
+In supervised machine learning, a set of labelled data is required for the model to train on. In the context of table tennis prediction, each match corresponded to two instances of data, one from the perspective of each player respectively, where every sample is composed of two elements:
+\begin{itemize}
+    \item A vector of input features ($\underline{x}$) consisting of player and match statistics
+    \item The target variable ($y$), indicating the result of the match that corresponds to its respective sample
+\end{itemize}
+The outcome of the match for player $i$ is defined as follows:
+
+$$
+    y =
+    \begin{cases}
+    1, &\text{if $player_i$ wins} \\ 
+    -1, &\text{if $player_i$ loses} \\
+    \end{cases}
+$$
+As any incomplete matches were removed from the dataset, combined with the inability to draw in table tennis, there is no other possible outcome.
+
+\subsection{Feature Engineering}
+In addition to the features extracted from the dataset in Section \ref{dataset}, we combined players' statistics to form new features \cite{barnett2005combining}. Using pre-existing knowledge on the sport, adding combinations of player statistics as features may improve the predictive model. These features were calculated as differences between different player statistics as this considers the characteristics of \textit{both} players participating in a match. This was inspired by Sipko and Knottenbelt \cite{sipko2015machine} and Cornman \etal \cite{cornman2017machine}, who both use features calculated as differences to predict the outcome of a tennis match.
+
+In table tennis, there are only two possible outcomes of a match; a win or a loss. Unlike team sports, a combination of players with each of varying individual ability and skill level do not need to be considered in the predictive outcome. Due to this, the likelihood of player substitutions nor offensive and defensive combinations do not need to be analysed.
+
+For the final feature set with abbreviated feature names and explanations, see Table \ref{table:nonlin}. Newly derived features are indicated with * and more detailed explanations can be found in subsections \ref{rankdiff}, \ref{advantage} and \ref{balance}. For the purposes of this paper, a long rally is defined as a rally of at least five shots, and a short rally is any rally of length under five.
+
+\begin{table}[ht]
+\caption{Feature Summary} % title of Table
+\centering % used for centering table
+\setlength{\tabcolsep}{3pt}
+\scalebox{1.2}{%
+\begin{tabular}{c c} % centered columns (4 columns)
+\hline\hline %inserts double horizontal lines
+Feature & Explanation \\ [0.5ex] % inserts table
+
+%heading
+\hline % inserts single horizontal line
+SP & percentage of total points won on serve \\
+RP & percentage of total points won on receive \\
+LRP & percentage of total points won on a long rally \\
+SRP & percentage of total points won on a short rally \\
+FHP & percentage of total points won on a forehand \\
+BHP & percentage of total points won on a backhand \\ 
+RANK & player ranking \\
+RANKDIFF* & difference in rank between opponents \\
+SA* & player serve advantage \\
+SRA* & player short rally advantage \\
+FHA* & player forehand advantage \\
+BALANCE* & measure of how well rounded a player is \\
+[1ex] % [1ex] adds vertical space
+
+\hline %inserts single line
+\end{tabular}}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}
+
+\subsubsection{Rank Difference} \label{rankdiff}
+
+The feature \textit{RANKDIFF} was constructed by calculating the difference between rankings of two opponents.
+$$
+RANKDIFF = \begin{cases}
+RANK_i - RANK_j &\text{for player $i$} \\
+RANK_j - RANK_i &\text{for player $j$} \\
+\end{cases}
+$$
+where $RANK_i$ and $RANK_j$ are the rankings of players $i$ and $j$ respectively at the time of the match. Therefore if a player's rank is better (i.e. lower numerical value) than their opponent's rank, $RANKDIFF$ will be a negative value, and vice versa. However, for some match instances where the ranking of both players are above 100, the feature $RANKDIFF$ is considered to be 0. This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
+
+For example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. Therefore, if both players have a rank of below 100, the expected difference in skill level is considered to have no benefit.
+
+\subsubsection{Serve Advantage} \label{advantage}
+The serve advantage of a player is calculated as the difference between their serve and receive winning percentage. This depicts the contrast as to how likely a player is to win a point if they are serving, compared to if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated therefrom.
+
+\subsubsection{Balance} \label{balance}
+An attempt to measure the \textit{completeness} of a player can be calculated by taking the average of serve, short rally and forehand advantage:
+$$
+BALANCE = \frac{|SA|+|SRA|+|FHA|}{3}
+$$
+Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game, therefore the feature $BALANCE$ indicates the overall well-roundness of a player's ability. \label{engineer}
+
+\subsection{Feature Scaling}
+Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}, and was performed for each feature. 
+
+\section{Models} \label{models}
+This paper uses Scikit-Learn's implementation to apply different models to the dataset \cite{pedregosa2011scikit}.
+
+\subsection{Logistic Regression}
+The logistic function $\sigma(t)$ is defined as follows:
+$$
+\sigma(x) = \frac{1}{1+e^{-x}}
+$$
+
+The logistic function maps any input value $x$ where $x = \{x\in \mathbb{R} \}$ to a value between 0 and 1, allowing the output to be interpreted as a probability. If this probability is considered to be over 0.5, it can be classified as true, where the player is predicted to win the match, otherwise the result is classified as false. The model gives the best reproduction of match outcomes for the training set by minimising the \textit{logistic loss} function:
+$$
+L(p) = -\frac{1}{n} \sum_{i=1}^n p_i \log(y_i) + (1-p_i)\log(1-y_i)
+$$
+\begin{equation*}
+\begin{gathered}
+    n = \text{number of matches} \\
+    p_i = \text{predicted probability of a player winning match $i$} \\
+    y_i = \text{outcome of match $i$},
+\end{gathered}
+\end{equation*}
+where a loss function measures the disparity between observations and their estimated fits \cite{hazan2014logistic}.
+
+\subsection{Random Forest}
+A random forest is a classifier consisting of a collection of simpler tree-structured classifiers $\{h(\textbf{x},\theta_k),\ k=1,...\}$, where the $\{\theta_k\}$ are independent identically distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$. For the $k$th tree, a random vector $\theta_k$ is generated and a tree is grown using $\theta_k$ and the training set, to produce a classifier $h(\textbf{x}, \theta_k)$ \cite{breiman2001random}. After a large number of trees are produced, the output of a random forest model is the class that receives the most votes. Decision trees tend to be simple to interpret and ``quick'' to train, making it a popular ML technique.
+
+\subsection{Support Vector Machines (SVM)}
+SVMs have been used in predicting tennis match outcome \cite{cornman2017machine}. The idea is that SVMs map an input vector in a feature space of $n$ dimensions, where $n$ is the number of features. The optimal hyperplane is identified which separates data points into two classes. This is known as the decision boundary, and the marginal distance between this boundary and the instances closest to the boundary is maximized. The existence of a decision boundary can allow for any detection of miss-classification. SVM algorithms use a set of mathematical functions that are defined as \textit{kernels}, and different SVM algorithms use different type of kernel functions. Different kernels including linear, polynomial, sigmoid and radial basis function (RBF) were used for the purposes of this study.
+
+\subsection{Multilayer Perceptron Neural Networks (MLP)}
+An MLP neural network is a mathematical model inspired by human neurons that consists of one or more hidden layers in-between it's input and output layers, and is designed to imitate the behaviour of biological neurons in the human brain. The network consists of mutually connected artificial neurons, where neurons are organised in layers, and connections are directed from lower layers to upper layers. Neurons from the same layer are not interconnected \cite{noriega2005multilayer}.
+
+Each connection between two neurons has an associated weight, and in the process of learning and training an MLP model, these weights are adjusted such that there is a minimal difference between the model output and the desired output. 
