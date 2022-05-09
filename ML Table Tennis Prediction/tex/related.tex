@@ -1,6 +1,6 @@
 \section{Related Work} \label{relatedwork}
 \subsection{Table tennis}
-\denes{not sure about section headers, but it would make sense to separate out the background from the ML. Also, can we have citations for the data, please?}
+%\denes{not sure about section headers, but it would make sense to separate out the background from the ML. Also, can we have citations for the data, please?}
 A table tennis match consists of a sequence of sets; in a professional singles match, the first player to win best of seven sets wins the match. In doubles (two teams of two players play against each other), the first team to win best of five sets wins the match. This paper will be looking at modelling professional singles matches.
 In a set, the first player that earns at least eleven points and at least two more than their opponent wins the set. Each player serves twice before alternating, however if the score reaches at least 10-10, each player serves only once before alternating.
 The sport has proven to be very popular, with more than three hundred million players worldwide, a large proportion residing in East Asia.
@@ -13,15 +13,13 @@ Machine learning (ML) is a branch of artificial intelligence that has been succe
 This paper will be using supervised ML methods, as match instances are labelled and used to estimate the desired outcome.
 The problem of predicting a table tennis match can be thought of as a binary classification problem, as data is categorized into one of two possible classes.
 \subsection{ML in Sports}
-\todo{A general overview of ML in sports}
+%\todo{A general overview of ML in sports}
 
 In the past, manual data collection methods for sports have typically proven to be time consuming and prone to human error and implicit bias. As such, recent improvements in technology has sparked interest in automatic data collection and analysis for different sports.
-For example, Xing \etal \cite{xing2010multiple} proposed a dual-mode two-way Bayesian inference approach to track multiple highly dynamic and interactive players from videos in team sports such as basketball, football and hockey. Claudino \etal \cite{claudino2019current} used different ML methods such as artificial neural networks and decision tree classifiers to investigate injury risk and sporting performance in football, basketball, handball and volleyball.
+For example, Xing \etal \cite{xing2010multiple} proposed a dual-mode two-way Bayesian inference approach to track multiple highly dynamic and interactive players from videos in team sports such as basketball, football and hockey. Claudino \etal \cite{claudino2019current} used different ML methods such as artificial neural networks and decision tree classifiers to investigate injury risk and sporting performance in football, basketball, handball and volleyball. Davoodi and Khanteymoori \cite{davoodi2010horse} used neural networks for horse racing prediction, where eight features were used as input nodes to each neural network. This included information such as horse weight and race distance, to predict the eventual finishing time of every horse in a race, and hence it's finishing rank. However, some horses had a lack of performance data, therefore it would not be adequate to use it's history for prediction. As such, these horses had to be removed from the dataset to achieve better results.
 
 Applications of ML in sports can help with players and performance analysts in identifying the most important factors that contribute to achieve winning outcomes. As a result, appropriate tactics can be identified in maximising player performance.
-Aside from formulating strategies to win matches, using machine learning methods for sport result prediction has become popular due the expanding domain in betting, which necessitates high predictive accuracy.
-
-
+Aside from formulating strategies to win matches, using machine learning methods for sport result prediction has become popular due the expanding domain in betting, which necessitates high predictive accuracy. Furthermore, automated scouting and recruitment \cite{bunker2019machine} and umpiring assistance \cite{vzemgulys2018recognition}, can be achieved through applications of ML.
 
 
 \subsection{Prediction in Tennis}
@@ -30,8 +28,7 @@ For tennis, Knottenbelt \etal \cite{knottenbelt2012common} proposed a common opp
 Barnett and Clarke \cite{barnett2005combining} use historical data from past matches to predict the probability of a player winning a single point. Clarke and Dyte \cite{clarke2000using} use a year's worth of tournament results to predict the outcome of a match using player rating points.
 However, by representing the quality of a player using only one value can overlook more subtle factors that could contribute to the outcome of a match. For example, this model would not consider a player's susceptibility to a certain skill or strategy.
 
-\subsection{?}
-Both tennis and table tennis are ideal sports to apply hierarchical probability models to; a table tennis match consists of a sequence of sets, which consists of a sequence of points, therefore due to certain similarities between the two sports, certain concepts can be applied from works that have been conducted in tennis.
+Due to certain similarities between tennis and table tennis, certain concepts can be applied from works that have been conducted in tennis. Both are ideal sports to apply hierarchical probability models to; a table tennis match consists of a sequence of sets, which consists of a sequence of points.
 
 \subsection{ML in Table tennis}
 In table tennis, a number of computer vision based approaches have been applied. Voeikov \etal \cite{voeikov2020ttnet} proposed a neural network that allowed for real-time processing of high-resolution table tennis videos. This was able to extract temporal and spatial data such as ball detection and in-game events, and is potentially capable of substituting manual data collection by sport scouts, in addition to assisting with referee decision making. Zhang \etal \cite{zhang2010visual} are able to compute the 3D coordinates of a table tennis ball by its image coordinates. The flying trajectory of the ball can be predicted, and hence the balls landing and striking point can be calculated, however, this study does not extend to predicting the match outcome.
