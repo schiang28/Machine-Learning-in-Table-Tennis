@@ -1,5 +1,5 @@
 \section{Evaluating Models} \label{evalmodels}
-\todo{shorted this}
+\todo{shorten this}
 A number of different machine learning algorithms were used, and the \textit{accuracy} for each model was calculated as an estimate for it's overall performance. Accuracy is defined to be the proportion of correctly predicted instances to the total number of predictions:
 $$
 accuracy = \frac{tp+tn}{tp+tn+fp+fn}
@@ -43,8 +43,8 @@ In cross validation, the dataset is split into $k$ random subsets, known as fold
 \end{comment}
 
 \section{Experimental Results} \label{experresults}
-The whole dataset was split in a ratio such that there was a training set, validation set and test set. 10\% of the original dataset was used as a test set, and of the remaining 90\%, the data was split in an 80:20 ratio for the training and validation set.
-The model trains on the training set, and the validation set is used for optimising the hyperparameters of the model. The best combination of hyperparameters for a model is determined by whichever has the highest accuracy on the validation set using 5-fold cross validation.
+The whole dataset was split in a ratio such that there was a training set, validation set and test set in a 18:72:10 ratio. 10\% of the original dataset was used as a test set, and of the remaining 90\%, the data was split in an 80:20 ratio for the training and validation set.
+The model trains on the training set, and the validation set is used for optimising the hyperparameters of the model.
 The test set is completely left out from the training process of the model, and is only used during evaluation. This is to see how well models generalise to unseen data which replicate new match data, as the test set is never used before evaluation. During evaluation, all other data is used for training the model (training and validation).
 Both accuracy and F1 score is reported for the validation and test sets. The standard deviation for each score for the validation set is reported as a basis of defining uncertainty; the results are shown in Table \ref{results}.
 

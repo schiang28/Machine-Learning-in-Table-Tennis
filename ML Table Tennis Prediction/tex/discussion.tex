@@ -16,6 +16,7 @@ One of the main advantages of using random forest is that it is much faster to t
 The importance of features from a random forest classifier can also be evaluated, as shown in Figure \ref{fig4}. This is achieved by calculating the mean decrease in impurity for features across all trees, where \textit{impurity} refers to the Gini impurity index. The impurity of a node is the probability of a specific feature being classified incorrectly assuming that it is selected randomly \cite{cassidy2014calculating}.
 
 
+\subsection{Ablation Study}
 We can also compare accuracy and F1 score for each model that do not include newly derived features that were defined in Section \ref{engineer}. All scores are lower for models that don't use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. Results of the ablation study are shown in Table \ref{results2}.
 
 \begin{table}[ht]

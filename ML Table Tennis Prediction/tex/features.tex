@@ -23,7 +23,7 @@ In addition to the features extracted from the dataset in Section \ref{dataset},
 
 In table tennis, there are only two possible outcomes of a match; a win or a loss. Unlike team sports, a combination of players with each of varying individual ability and skill level do not need to be considered in the predictive outcome. Due to this, the likelihood of player substitutions nor offensive and defensive combinations do not need to be analysed.
 
-For the final feature set with abbreviated feature names and explanations, see Table \ref{table:nonlin}. Newly derived features are indicated with * and more detailed explanations can be found in subsections \ref{rankdiff}, \ref{advantage} and \ref{balance}. For the purposes of this paper, a long rally is defined as a rally of at least five shots, and a short rally is any rally of length under five.
+For the final feature set with abbreviated feature names and explanations, see Table \ref{table:nonlin}. Newly derived features are indicated with * and more detailed explanations can be found in subsections \ref{sp} to \ref{balance}. For the purposes of this paper, a long rally is defined as a rally of at least five shots, and a short rally is any rally of length under five.
 
 \begin{table}[ht]
 \caption{Feature Summary} % title of Table
@@ -52,11 +52,34 @@ BALANCE* & measure of how well rounded a player is \\
 
 \hline %inserts single line
 \end{tabular}}
+%\vspace{4em}
+
 \label{table:nonlin} % is used to refer this table in the text
 \end{table}
 
-\subsubsection{Rank Difference} \label{rankdiff}
 
+\subsubsection{Serve Percentage}\label{sp}
+The proportion of points won on serve by a player. This can be demonstrated from data similar to Figure \ref{sequence}; if the serve and error are made on opposing sides of the table, it can be concluded that the respective rally was won by the player who served.
+
+\subsubsection{Receive Percentage}\label{rp}
+The proportion of points won on receive by a player. Similarly, this can be demonstrated from Figure \ref{sequence}; the serve and error is made by the same player, therefore the point is won by the receiver.
+
+\subsubsection{Long Rally Percentage}\label{lrp}
+The proportion of points won on a long rally by a player, determined by the location of the last bounce in a rally. For example, Figure \ref{svlr} indicates that one player won 47 points on a long rally, while the other won 45.
+
+\subsubsection{Short Rally Percentage}\label{srp}
+The proportion of points won on a short rally by a player. Similar to \ref{lrp}, Figure \ref{svlr} indicates that one player won 21 points on a short rally, while the other won 24 in the entire match.
+
+\subsubsection{Forehand Percentage}\label{fp}
+The proportion of points won on a forehand by a player, determined by the type of stroke used on the winning shot of a rally. For example, Figure \ref{fvbh} indicates one player won 24 points on a forehand, and the other winning 38.
+
+\subsubsection{Backhand Percentage}\label{bp}
+The proportion of points won on a backhand by a player. Similar to \ref{fp}, Figure \ref{fvbh} indicates that one player won 43 points on a backhand, and the other winning 29.
+
+\subsubsection{Rank} \label{rank}
+Information on both players are included in the dataset, including the ranking of both players.
+
+\subsubsection{Rank Difference} \label{rankdiff}
 The feature \textit{RANKDIFF} was constructed by calculating the difference between rankings of two opponents.
 $$
 RANKDIFF = \begin{cases}
@@ -79,37 +102,4 @@ $$
 Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game, therefore the feature $BALANCE$ indicates the overall well-roundness of a player's ability. \label{engineer}
 
 \subsection{Feature Scaling}
-Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}, and was performed for each feature. 
-
-\section{Models} \label{models}
-This paper uses Scikit-Learn's implementation to apply different models to the dataset \cite{pedregosa2011scikit}.
-
-\subsection{Logistic Regression}
-The logistic function $\sigma(t)$ is defined as follows:
-$$
-\sigma(x) = \frac{1}{1+e^{-x}}
-$$
-
-The logistic function maps any input value $x$ where $x = \{x\in \mathbb{R} \}$ to a value between 0 and 1, allowing the output to be interpreted as a probability. If this probability is considered to be over 0.5, it can be classified as true, where the player is predicted to win the match, otherwise the result is classified as false. The model gives the best reproduction of match outcomes for the training set by minimising the \textit{logistic loss} function:
-$$
-L(p) = -\frac{1}{n} \sum_{i=1}^n p_i \log(y_i) + (1-p_i)\log(1-y_i)
-$$
-\begin{equation*}
-\begin{gathered}
-    n = \text{number of matches} \\
-    p_i = \text{predicted probability of a player winning match $i$} \\
-    y_i = \text{outcome of match $i$},
-\end{gathered}
-\end{equation*}
-where a loss function measures the disparity between observations and their estimated fits \cite{hazan2014logistic}.
-
-\subsection{Random Forest}
-A random forest is a classifier consisting of a collection of simpler tree-structured classifiers $\{h(\textbf{x},\theta_k),\ k=1,...\}$, where the $\{\theta_k\}$ are independent identically distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$. For the $k$th tree, a random vector $\theta_k$ is generated and a tree is grown using $\theta_k$ and the training set, to produce a classifier $h(\textbf{x}, \theta_k)$ \cite{breiman2001random}. After a large number of trees are produced, the output of a random forest model is the class that receives the most votes. Decision trees tend to be simple to interpret and ``quick'' to train, making it a popular ML technique.
-
-\subsection{Support Vector Machines (SVM)}
-SVMs have been used in predicting tennis match outcome \cite{cornman2017machine}. The idea is that SVMs map an input vector in a feature space of $n$ dimensions, where $n$ is the number of features. The optimal hyperplane is identified which separates data points into two classes. This is known as the decision boundary, and the marginal distance between this boundary and the instances closest to the boundary is maximized. The existence of a decision boundary can allow for any detection of miss-classification. SVM algorithms use a set of mathematical functions that are defined as \textit{kernels}, and different SVM algorithms use different type of kernel functions. Different kernels including linear, polynomial, sigmoid and radial basis function (RBF) were used for the purposes of this study.
-
-\subsection{Multilayer Perceptron Neural Networks (MLP)}
-An MLP neural network is a mathematical model inspired by human neurons that consists of one or more hidden layers in-between it's input and output layers, and is designed to imitate the behaviour of biological neurons in the human brain. The network consists of mutually connected artificial neurons, where neurons are organised in layers, and connections are directed from lower layers to upper layers. Neurons from the same layer are not interconnected \cite{noriega2005multilayer}.
-
-Each connection between two neurons has an associated weight, and in the process of learning and training an MLP model, these weights are adjusted such that there is a minimal difference between the model output and the desired output. 
+Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}. We get a coded value by subtracting the mean of the sample from the data and dividing it by the standard deviation. The feature representing rank difference for example, is represented across a much larger range compared to features which are percentages.
