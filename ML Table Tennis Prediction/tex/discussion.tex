@@ -3,10 +3,10 @@ The model that achieved the highest F1 score on the validation set were MLP neur
 The activation function `relu', known as the rectified linear unit function, was chosen. This function returns $f(x) = \max{(0,x)}$ and defines the output of a node in a hidden layer given a set of inputs. The hidden layer size was set to 2 and the maximum number of iterations the solver iterates was chosen to be 200. The solver for weight optimization is set to `lbfgs', an optimizer that belongs in the family of Quasi-Newton methods. The learning rate for scheduling weight updates is set to constant; more detail on different hyperparameters can be found in Scikit Learns documentation \cite{pedregosa2011scikit}. However, the generic layered structure of a neural network has proven to be time consuming. Additionally, this technique is considered a ``black box'' technology, and finding out why a neural network has poor performance, or how it performs the classification process, is extremely difficult \cite{noriega2005multilayer}.
 
 \begin{figure}[ht]
-\vspace{-1em}
+
 \includegraphics[width=8.5cm]{plots/feature_importance.pdf}
 \caption{Importance of features from random forest classifier}
-\vspace{-1em}
+
 \label{fig4}
 \centering
 \end{figure}
