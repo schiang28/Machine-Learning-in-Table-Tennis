@@ -5,7 +5,7 @@ A number of different machine learning algorithms were used, and the \textit{acc
 $$
 accuracy = \frac{tp+tn}{tp+tn+fp+fn}
 $$
-where $tp$ and $tn$ are true positives and true negatives, and $fp$ and $fn$ are false positives and false negatives respectively \cite{vanwinckelen2012estimating}. Confusion matrices for each classification model can be visualised in Figure \ref{confusionmatrices}.
+where $tp$ and $tn$ are true positives and true negatives, and $fp$ and $fn$ are false positives and false negatives respectively \cite{vanwinckelen2012estimating}. Confusion matrices for each classification model can be visualised in Figure \ref{confusionmatricesr2}.
 %\sophie{should figures 2 and 3 be kept?}
 %\denes{No, but we could report all the confusion matrices for each model (possibly in the appendices).}
 Additionally, precision and recall were calculated for each model.
@@ -21,7 +21,8 @@ F1 \ score = 2 \cdot \frac{precision \cdot recall}{precision + recall}
 $$
 
 An issue associated with training models is the possibility for the model to \textit{overfit}. We use cross validation in order to limit overfitting.
-%Overfitting occurs when a model captures unwanted bias and noise in the data that it negatively impacts the performance of a model. The model corresponds to it's initial training data too well, and fails to predict unseen data reliably. In order to limit overfitting, a popular re-sampling technique called $k$-fold cross validation is used. In cross validation, the dataset is split into $k$ random subsets, known as folds, and one is selected as a test set for the model to test on, while the others are used as a training set for the model to train on. This is repeated $k$ times where a different subset of data is used as the test set each time, and the overall performance of the model is calculated as the average of accuracy scores for each iteration \cite{berrar2019cross}.
+%Overfitting occurs when a model captures unwanted bias and noise in the data that it negatively impacts the performance of a model. The model corresponds to it's initial training data too well, and fails to predict unseen data reliably. In order to limit overfitting, a popular re-sampling technique called $k$-fold cross validation is used.
+In cross validation, the dataset is split into $k$ random subsets, known as folds, and one is selected as a test set for the model to test on, while the others are used as a training set for the model to train on. This is repeated $k$ times where a different subset of data is used as the test set each time, and the overall performance of the model is calculated as the average of accuracy scores for each iteration \cite{berrar2019cross}.
 
 \section{Experimental Results} \label{experresults}
 The whole dataset was split in a ratio such that there was a training set, validation set and test set in a 18:72:10 ratio. 10\% of the original dataset was used as a test set, and of the remaining 90\%, the data was split in an 80:20 ratio for the training and validation set.
@@ -57,6 +58,9 @@ MLP Neural Network & 0.696$\pm{0.043}$ & 0.708$\pm{0.045}$ & 0.694 & 0.703\\
 \end{tabular}}
 \end{table}
 
+Receiving operating characteristics (ROC) learning curves and the trade-off between precision and recall can be seen from Figures \ref{roc} and \ref{par}. ROC curves demonstrate the performance of a classification model for all classification thresholds. The closer the apex of the curve is to the upper left hand corner, the greater the model's discriminatory ability \cite{fan2006understanding}. This is plotted for each type of classifier, including the SVM model using a linear kernel. 
+For each trained model, we use it's accuracy score, F1 measure and the area under it's ROC curve to evaluate overall performance.
+
 \begin{figure}[ht]
 \includegraphics[width=8.5cm]{plots/roccurves.pdf}
 \caption{ROC Learning Curves}
@@ -72,3 +76,4 @@ MLP Neural Network & 0.696$\pm{0.043}$ & 0.708$\pm{0.045}$ & 0.694 & 0.703\\
 \label{par}
 \centering
 \end{figure}
+
