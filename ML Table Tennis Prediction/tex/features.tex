@@ -9,13 +9,14 @@ In supervised machine learning, a set of labelled data is required for the model
 \end{itemize}
 The outcome of the match for player $i$ is defined as follows:
 
-$$
+\begin{equation}
     y =
     \begin{cases}
     1, &\text{if $player_i$ wins} \\ 
     -1, &\text{if $player_i$ loses} \\
     \end{cases}
-$$
+\end{equation}
+    
 As any incomplete matches were removed from the dataset, combined with the inability to draw in table tennis, there is no other possible outcome.
 
 \subsection{Feature Engineering}
@@ -58,7 +59,7 @@ BALANCE* & measure of how well rounded a player is \\
 \end{table}
 
 
-\subsubsection{Serve Percentage}\label{sp}
+\subsubsection*{SP: Serve Percentage}\label{sp}
 The proportion of points won on serve by a player. This can be demonstrated from data similar to Figure \ref{sequence}; if the serve and error are made on opposing sides of the table, it can be concluded that the respective rally was won by the player who served.
 
 \subsubsection{Receive Percentage}\label{rp}
@@ -81,12 +82,13 @@ Information on both players are included in the dataset, including the ranking o
 
 \subsubsection{Rank Difference} \label{rankdiff}
 The feature \textit{RANKDIFF} was constructed by calculating the difference between rankings of two opponents.
-$$
-RANKDIFF = \begin{cases}
+\begin{equation}
+    RANKDIFF = \begin{cases}
 RANK_i - RANK_j &\text{for player $i$} \\
 RANK_j - RANK_i &\text{for player $j$} \\
 \end{cases}
-$$
+\end{equation}
+
 where $RANK_i$ and $RANK_j$ are the rankings of players $i$ and $j$ respectively at the time of the match. Therefore if a player's rank is better (i.e. lower numerical value) than their opponent's rank, $RANKDIFF$ will be a negative value, and vice versa. However, for some match instances where the ranking of both players are above 100, the feature $RANKDIFF$ is considered to be 0. This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
 
 For example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. Therefore, if both players have a rank of below 100, the expected difference in skill level is considered to have no benefit.
@@ -96,9 +98,10 @@ The serve advantage of a player is calculated as the difference between their se
 
 \subsubsection{Balance} \label{balance}
 An attempt to measure the \textit{completeness} of a player can be calculated by taking the average of serve, short rally and forehand advantage:
-$$
-BALANCE = \frac{|SA|+|SRA|+|FHA|}{3}
-$$
+\begin{equation}
+    BALANCE = \frac{|SA|+|SRA|+|FHA|}{3}
+\end{equation}
+
 Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game, therefore the feature $BALANCE$ indicates the overall well-roundness of a player's ability. \label{engineer}
 
 \subsection{Feature Scaling}

@@ -15,21 +15,24 @@ This paper uses Scikit-Learn's implementation to apply different models to the d
 
 \subsection{Logistic Regression}
 The logistic function $\sigma(t)$ is defined as follows:
-$$
-\sigma(x) = \frac{1}{1+e^{-x}}
-$$
+\begin{equation}
+    \sigma(x) = \frac{1}{1+e^{-x}}
+\end{equation}
 
 The logistic function maps any input value $x$ where $x = \{x\in \mathbb{R} \}$ to a value between 0 and 1, allowing the output to be interpreted as a probability. If this probability is considered to be over 0.5, it can be classified as true, where the player is predicted to win the match, otherwise the result is classified as false. The model gives the best reproduction of match outcomes for the training set by minimising the \textit{logistic loss} function:
+
+\begin{equation}
+    (p) = -\frac{1}{n} \sum_{i=1}^n p_i \log(y_i) + (1-p_i)\log(1-y_i)
+\end{equation}
+
 $$
-L(p) = -\frac{1}{n} \sum_{i=1}^n p_i \log(y_i) + (1-p_i)\log(1-y_i)
-$$
-\begin{equation*}
 \begin{gathered}
     n = \text{number of matches} \\
     p_i = \text{predicted probability of a player winning match $i$} \\
     y_i = \text{outcome of match $i$},
 \end{gathered}
-\end{equation*}
+$$
+
 where a loss function measures the disparity between observations and their estimated fits \cite{hazan2014logistic}.
 
 \subsection{Random Forest}
