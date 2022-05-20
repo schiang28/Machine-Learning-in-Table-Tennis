@@ -1,30 +1,39 @@
 \section{Feature Engineering \& Selection} \label{features}
-Rich data is valuable, however, irrelevant or redundant variables can increase both training and inference time, as well as decrease a model's performance, therefore choosing appropriate features to input into a classification model is very important.
+% Dr Denes: can keep, but removed for now to condense
+%Rich data is valuable, however, irrelevant or redundant variables can increase both training and inference time, as well as decrease a model's performance, therefore choosing appropriate features to input into a classification model is very important.
 
 \subsection{Match Representation}
-In supervised machine learning, a set of labelled data is required for the model to train on. In the context of table tennis prediction, each match corresponded to two instances of data, one from the perspective of each player respectively, where every sample is composed of two elements:
+We represent each match from a participating player's perspective as follows:
+%In supervised machine learning, a set of labelled data is required for the model to train on. In the context of table tennis prediction, each match corresponded to two instances of data, one from the perspective of each player respectively, where every sample is composed of two elements:
 \begin{itemize}
-    \item A vector of input features ($\underline{x}$) consisting of player and match statistics
-    \item The target variable ($y$), indicating the result of the match that corresponds to its respective sample
+    \item a feature vector ($\underline{x}$) consisting of player and previous match statistics,
+    \item{
+     the target variable ($y$), indicating the result of the match: %that corresponds to its respective sample
+     \begin{equation}
+        y =
+        \begin{cases}
+        1, &\text{if $player_i$ wins} \\ 
+        -1, &\text{if $player_i$ loses}
+        \end{cases}.
+    \end{equation}
+     }
 \end{itemize}
-The outcome of the match for player $i$ is defined as follows:
 
-\begin{equation}
-    y =
-    \begin{cases}
-    1, &\text{if $player_i$ wins} \\ 
-    -1, &\text{if $player_i$ loses} \\
-    \end{cases}
-\end{equation}
-    
-As any incomplete matches were removed from the dataset, combined with the inability to draw in table tennis, there is no other possible outcome.
+
+
+With incomplete matches removed from the dataset, there are no other possible outcomes (i.e. no draws) in table tennis. Each match maps to two ($\underline{x}$,$y$) pairs, from the perspective of the two participating players.
+%As any incomplete matches were removed from the dataset, 
 
 \subsection{Feature Engineering}
-In addition to the features extracted from the dataset in Section \ref{dataset}, we combined players' statistics to form new features \cite{barnett2005combining}. Using pre-existing knowledge on the sport, adding combinations of player statistics as features may improve the predictive model. These features were calculated as differences between different player statistics as this considers the characteristics of \textit{both} players participating in a match. This was inspired by Sipko and Knottenbelt \cite{sipko2015machine} and Cornman \etal \cite{cornman2017machine}, who both use features calculated as differences to predict the outcome of a tennis match.
+\label{sec:engineer}
+In addition to the features extracted from the dataset in Section \ref{dataset}, we combined players' statistics to form new features \cite{barnett2005combining}. We combine table tennis-specific domain knowledge with the approaches of Sipko and Knottenbelt \cite{sipko2015machine} and Cornman \etal \cite{cornman2017machine}, who all use features calculated as differences to predict the outcome of a \textit{tennis} match.
 
-In table tennis, there are only two possible outcomes of a match; a win or a loss. Unlike team sports, a combination of players with each of varying individual ability and skill level do not need to be considered in the predictive outcome. Due to this, the likelihood of player substitutions nor offensive and defensive combinations do not need to be analysed.
+%Using pre-existing knowledge on the sport, adding combinations of player statistics as features may improve the predictive model. These features were calculated as differences between different player statistics as this considers the characteristics of \textit{both} players participating in a match. This was inspired by 
 
-For the final feature set with abbreviated feature names and explanations, see Table \ref{table:nonlin}. Newly derived features are indicated with * and more detailed explanations can be found in subsections \ref{sp} to \ref{balance}. For the purposes of this paper, a long rally is defined as a rally of at least five shots, and a short rally is any rally of length under five.
+%In table tennis, there are only two possible outcomes of a match; a win or a loss. 
+Unlike in team sports, a combination of players with each of varying individual ability and skill level do not need to be considered in the predictive outcome. Due to this, the likelihood of player substitutions nor offensive and defensive combinations do not need to be analysed.
+
+Table~\ref{table:nonlin} shows the final  set of features. Newly derived features are indicated with *. More detailed explanations can be found in subsections \ref{sp} to \ref{balance}.
 
 \begin{table}[ht]
 \caption{Feature Summary} % title of Table
@@ -59,50 +68,54 @@ BALANCE* & measure of how well rounded a player is \\
 \end{table}
 
 
-\subsubsection*{SP: Serve Percentage}\label{sp}
-The proportion of points won on serve by a player. This can be demonstrated from data similar to Figure \ref{sequence}; if the serve and error are made on opposing sides of the table, it can be concluded that the respective rally was won by the player who served.
+\subsubsection*{SP: Serve Percentage}\label{sec:sp}
+The proportion of points won on serve by a player. 
+%This can be demonstrated from data similar to \figref{sequence}; 
+If the serve and error are made on opposing sides of the table, it  was won by serving player.
 
-\subsubsection{Receive Percentage}\label{rp}
-The proportion of points won on receive by a player. Similarly, this can be demonstrated from Figure \ref{sequence}; the serve and error is made by the same player, therefore the point is won by the receiver.
+\subsubsection*{RP: Receive Percentage}\label{sec:rp}
+The proportion of points won by the receiving player. E.g. in \figref{sequence},  the serve and error is made by the same player, so the point is won by the receiver.
 
-\subsubsection{Long Rally Percentage}\label{lrp}
-The proportion of points won on a long rally by a player, determined by the location of the last bounce in a rally. For example, Figure \ref{svlr} indicates that one player won 47 points on a long rally, while the other won 45.
+\subsubsection*{LRP: Long Rally Percentage}\label{sec:lrp}
+In this paper we define a long rally  as a rally of at least five shots \denes{ I'm confused again about the meaning of a long vs short rally}. c.f.: 
+The proportion of points won on a long rally by a player, determined by the location of the last bounce in a rally. E.g. \figref{svlr} shows that one player won 47 points on a long rally, while the other won 45 \denes{how do we get percentage?}.
 
-\subsubsection{Short Rally Percentage}\label{srp}
-The proportion of points won on a short rally by a player. Similar to \ref{lrp}, Figure \ref{svlr} indicates that one player won 21 points on a short rally, while the other won 24 in the entire match.
+\subsubsection*{SRP: Short Rally Percentage}\label{sec:srp}
+Compared to LRP, this is the proportion of points won on a \textit{short rally} by a player. E.g. \figref{svlr} shows that one player won 21 points on a short rally, while the other won 24 in the entire match.
 
-\subsubsection{Forehand Percentage}\label{fp}
-The proportion of points won on a forehand by a player, determined by the type of stroke used on the winning shot of a rally. For example, Figure \ref{fvbh} indicates one player won 24 points on a forehand, and the other winning 38.
+\subsubsection*{FHP: Forehand Percentage}\label{sec:fp}
+The proportion of points won on a forehand by a player, determined by the type of stroke used on the winning shot of a rally. \figref{fvbh} shows one player won 24 points on a forehand, and the other winning 38.
 
-\subsubsection{Backhand Percentage}\label{bp}
-The proportion of points won on a backhand by a player. Similar to \ref{fp}, Figure \ref{fvbh} indicates that one player won 43 points on a backhand, and the other winning 29.
+\subsubsection*{BHP: Backhand Percentage}\label{sec:bp}
+The proportion of points won on a backhand by a player. \figref{fvbh} shows one player won 43 points on a backhand, and the other winning 29.
 
-\subsubsection{Rank} \label{rank}
-Information on both players are included in the dataset, including the ranking of both players.
+\subsubsection*{RANK} \label{sec:rank}
+The ranking of the player \denes{who establishes the ranking? ITTF?}
+%Information on both players are included in the dataset, including the ranking of both players.
 
-\subsubsection{Rank Difference} \label{rankdiff}
-The feature \textit{RANKDIFF} was constructed by calculating the difference between rankings of two opponents.
+\subsubsection*{RANKDIFF*: Rank Difference} \label{sec:rankdiff}
+Constructed by calculating the difference between rankings of two opponents:
 \begin{equation}
-    RANKDIFF = \begin{cases}
-RANK_i - RANK_j &\text{for player $i$} \\
-RANK_j - RANK_i &\text{for player $j$} \\
+    \text{RANKDIFF} = \begin{cases}
+\text{RANK}_i - \text{RANK}_j &\text{for player $i$} \\
+\text{RANK}_j - \text{RANK}_i &\text{for player $j$},
 \end{cases}
 \end{equation}
+where RANK$_i$ and RANK$_j$ are respective player rankings at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's ), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked above 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
 
-where $RANK_i$ and $RANK_j$ are the rankings of players $i$ and $j$ respectively at the time of the match. Therefore if a player's rank is better (i.e. lower numerical value) than their opponent's rank, $RANKDIFF$ will be a negative value, and vice versa. However, for some match instances where the ranking of both players are above 100, the feature $RANKDIFF$ is considered to be 0. This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
 
-For example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. Therefore, if both players have a rank of below 100, the expected difference in skill level is considered to have no benefit.
+\subsubsection*{SA*, SRA*, HA*} \label{sec:advantage}
+The serve advantage of a player is calculated as the difference between their serve and receive winning percentage. This depicts the contrast as to how likely a player is to win a point if they are serving vs if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated therefrom.
 
-\subsubsection{Serve Advantage} \label{advantage}
-The serve advantage of a player is calculated as the difference between their serve and receive winning percentage. This depicts the contrast as to how likely a player is to win a point if they are serving, compared to if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated therefrom.
+\subsubsection*{BALANCE*} \label{sec:balance}
 
-\subsubsection{Balance} \label{balance}
-An attempt to measure the \textit{completeness} of a player can be calculated by taking the average of serve, short rally and forehand advantage:
+Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game. We propose measuring the overall well-roundness of a player's ability as the average of serve, short rally and forehand advantage:
 \begin{equation}
-    BALANCE = \frac{|SA|+|SRA|+|FHA|}{3}
+    \textit{BALANCE} = \frac{|\textit{SA}|+|\textit{SRA}|+|\textit{FHA}|}{3}.
 \end{equation}
 
-Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game, therefore the feature $BALANCE$ indicates the overall well-roundness of a player's ability. \label{engineer}
+
 
 \subsection{Feature Scaling}
-Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}. We get a coded value by subtracting the mean of the sample from the data and dividing it by the standard deviation. The feature representing rank difference for example, is represented across a much larger range compared to features which are percentages.
+To account for the varying numerical range of the input features, and to make features comparable, we standardise each input to a zero mean with a unit standard deviation.
+%Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}. We get a coded value by subtracting the mean of the sample from the data and dividing it by the standard deviation. The feature representing rank difference for example, is represented across a much larger range compared to features which are percentages.

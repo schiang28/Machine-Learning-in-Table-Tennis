@@ -1,7 +1,10 @@
-\section{Conclusion} \label{conc}
-In this paper, the concepts of machine learning were discussed and how different supervised ML methods and classification algorithms could be used in table tennis match prediction. 
-This paper follows a state-of-the art approach in training and evaluating different machine learning models. We explain the theory behind each model that is used, and how it's performance was evaluated.
-The original dataset retrieved from OSAI \cite{OSAI}, in addition to deriving new features were used, and the difference in performance of models with and without newly derived features were compared.
-When taking into consideration accuracy and F1 score on the validation and test set, combined with the area under it's ROC curve, the model which achieved the highest evaluated score was by using logistic regression.
-From Figure \ref{fig4}, the feature which is shown to be the most important is $RANKDIFF$, a measure of the difference between rank in opponents in an attempt to quantify both players' skill difference. 
-Future works could focus on a selection of the most important features established from the random forest model.
+\section{Conclusion and Future Work} \label{sec:conc}
+Machine learning has proved suitable for solving numerous previously impossible tasks. In this paper, we explore how supervised classification models could be used to prdict the results of table tennis matches. 
+This paper evaluates diligently a number of state-of-the-art classification models using 5-fold cross-validation and hyperparameter tuning. The original dataset retrieved from OSAI \cite{OSAI}. We also propose using a handful of engineered features, from which a non-linear RANKDIFF has been proved to be the most salient in our ablation study.
+When taking into consideration accuracy and F1 score on the validation and test set, combined with the area under it's ROC curve, it seems that logistic regression has  achieved the highest overall score. However, the difference between models was often modest. Other considerations when picking a model for similar applications could include training time or model transparency (at both of which random forests excel).
+%Future works could focus on a selection of the most important features established from the random forest model.
+Future work could explore combining TTNet with our prediction model to provide updated live match predictions. It would be also an interesting test of the model to see how its predictions compare to betting odds. As automated table tennis analytics are becoming available below professional leagues, the authors are also interested whether the importance of features and the model choice transfers to these matches as well.
+
+\denes{I just have one more question which occured to me while re-reading the paper. When predicting the outcome of the match, do you take into account all the stats of that give match (e.g. serves won etc.), or do you just look at the history of the players?(or is it a bit of both?)}
+
+\todo{7.5 pages --- should we aim for a briefs manuscript (6 pages?)}

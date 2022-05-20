@@ -1,23 +1,23 @@
-\section{Discussion} \label{discussion}
-The model that achieved the highest F1 score on the validation set were MLP neural networks. The difference in accuracy and F1 score between the validation and test set was shown to be smaller in comparison to SVMs and random forest.
-The activation function `relu', known as the rectified linear unit function, was chosen. This function returns $f(x) = \max{(0,x)}$ and defines the output of a node in a hidden layer given a set of inputs. The hidden layer size was set to 2 and the maximum number of iterations the solver iterates was chosen to be 200. The solver for weight optimization is set to `lbfgs', an optimizer that belongs in the family of Quasi-Newton methods. The learning rate for scheduling weight updates is set to constant; more detail on different hyperparameters can be found in Scikit Learns documentation \cite{pedregosa2011scikit}. However, the generic layered structure of a neural network has proven to be time consuming. Additionally, this technique is considered a ``black box'' technology, and finding out why a neural network has poor performance, or how it performs the classification process, is extremely difficult \cite{noriega2005multilayer}.
+%\section{Discussion} \label{discussion}
+%The model that achieved the highest F1 score on the validation set were MLP neural networks. The difference in accuracy and F1 score between the validation and test set was shown to be smaller in comparison to SVMs and random forest.
+
 
 \begin{figure}[ht]
 
 \includegraphics[width=8.5cm]{plots/feature_importance.pdf}
-\caption{Importance of features from random forest classifier}
+\caption{Importance of features from random forest classifier based on Gini impurity. In our dataset, RANKDIFF appears to be the most important feature .\denes{Can we put * on the derived features, please?}. }
 
-\label{fig4}
+\label{fig:fig4}
 \centering
 \end{figure}
 
-One of the main advantages of using random forest is that it is much faster to train. This made tuning hyperparameters easier as training the model several times was less computationally expensive. The maximum number of levels in each decision tree was set to 80, the maximum number of features considered for splitting a node was set to 4, the minimum number of data points allowed in a leaf node was set to 4 and the number of trees that were in the classifier was set to 200.
+One qualitative advantage of using a random forest classifier is its training speed, which made hyperparameter tuning easier. The maximum number of levels in each decision tree was set to 80, the maximum number of features considered for splitting a node was set to 4, the minimum number of data points allowed in a leaf node was set to 4 and the number of trees that were in the classifier was set to 200.
 
-The importance of features from a random forest classifier can also be evaluated, as shown in Figure \ref{fig4}. This is achieved by calculating the mean decrease in impurity for features across all trees, where \textit{impurity} refers to the Gini impurity index. The impurity of a node is the probability of a specific feature being classified incorrectly assuming that it is selected randomly \cite{cassidy2014calculating}.
+Another significant advantage of a random forest classifier is that the importance of features can also be extracted and visualised.  \figref{fig4} shows the importance of each feature as the the mean decrease in Gini impurity for features across all trees. The impurity of a node is the probability of a specific feature being classified incorrectly assuming that it is selected randomly \cite{cassidy2014calculating}.
 
 
 \subsection{Ablation Study}
-We can also compare accuracy and F1 score for each model that do not include newly derived features that were defined in Section \ref{engineer}. All scores are lower for models that don't use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. Results of the ablation study are shown in Table \ref{results2}.
+\figref{fig4} predicts that the most important feature in a random forest model is  RANKDIFF, which justifies the inclusion of hand-crafted features. To reinforce this finding, we report the accuracy and F1 score for each model with and without the derived features (see \secref{engineer}). All scores are lower for models that don't use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. Detailed results of the ablation study are  in Table \ref{results2}.
 
 \begin{table}[ht]
 \caption{Model performance with and without newly derived features}
