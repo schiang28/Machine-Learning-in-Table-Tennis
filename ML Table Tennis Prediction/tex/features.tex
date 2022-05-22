@@ -72,14 +72,15 @@ BALANCE* & measure of how well rounded a player is \\
 \subsubsection*{SP: Serve Percentage}\label{sec:sp}
 The proportion of points won on serve by a player. 
 %This can be demonstrated from data similar to \figref{sequence}; 
-If the serve and error are made on opposing sides of the table, it  was won by serving player.
+If the serve and error are made on opposing sides of the table, it  was won by the serving player.
 
 \subsubsection*{RP: Receive Percentage}\label{sec:rp}
-The proportion of points won by the receiving player. E.g. in \figref{sequence},  the serve and error is made by the same player, so the point is won by the receiver.
+The proportion of points won by the receiving player. E.g. in \figref{sequence}, the serve and error is made by the same player, so the point is won by the receiver.
 
 \subsubsection*{LRP: Long Rally Percentage}\label{sec:lrp}
-In this paper we define a long rally  as a rally of at least five shots \denes{ I'm confused again about the meaning of a long vs short rally}. c.f.: 
-The proportion of points won on a long rally by a player, determined by the location of the last bounce in a rally. E.g. \figref{svlr} shows that one player won 47 points on a long rally, while the other won 45 \denes{how do we get percentage?}.
+%\denes{ I'm confused again about the meaning of a long vs short rally}.
+The proportion of points won on a long rally by a player to the total number of rallies won. In this paper we define a long rally as a rally of at least five shots. E.g. \figref{svlr} shows that one player won 47 points on a long rally, while the other won 45.
+%\denes{how do we get percentage?}.
 
 \subsubsection*{SRP: Short Rally Percentage}\label{sec:srp}
 Compared to LRP, this is the proportion of points won on a \textit{short rally} by a player. E.g. \figref{svlr} shows that one player won 21 points on a short rally, while the other won 24 in the entire match.
@@ -91,8 +92,8 @@ The proportion of points won on a forehand by a player, determined by the type o
 The proportion of points won on a backhand by a player. \figref{fvbh} shows one player won 43 points on a backhand, and the other winning 29.
 
 \subsubsection*{RANK} \label{sec:rank}
-The ranking of the player \denes{who establishes the ranking? ITTF?}
-%Information on both players are included in the dataset, including the ranking of both players.
+The ranking of the player, which is established by ITTF \cite{ITTF}.
+%\denes{who establishes the ranking? ITTF?}
 
 \subsubsection*{RANKDIFF*: Rank Difference} \label{sec:rankdiff}
 Constructed by calculating the difference between rankings of two opponents:
@@ -106,7 +107,7 @@ where RANK$_i$ and RANK$_j$ are respective player rankings at the time of the ma
 
 
 \subsubsection*{SA*, SRA*, HA*} \label{sec:advantage}
-The serve advantage of a player is calculated as the difference between their serve and receive winning percentage. This depicts the contrast as to how likely a player is to win a point if they are serving vs if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated therefrom.
+The serve advantage of a player is calculated as the difference between their serve and receive winning percentage. This depicts the contrast as to how likely a player is to win a point if they are serving rather than if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated therefrom.
 
 \subsubsection*{BALANCE*} \label{sec:balance}
 
