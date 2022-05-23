@@ -97,11 +97,6 @@ MLP Neural Network & 0.696$\pm{0.019}$ & 0.708$\pm{0.020}$ & 0.694 & 0.703\\
 \end{tabular}}
 \end{table}
 
-Receiving operating characteristics (ROC) learning curves and the trade-off between precision and recall can be seen from Figs.~\ref{fig:roc}~and~\ref{fig:par}.
-\denes{Once these are replotted on single plots, we could try to comment on whether there is a noticeable difference}.
-%ROC curves demonstrate the performance of a classification model for all classification thresholds. The closer the apex of the curve is to the upper left hand corner, the greater the model's discriminatory ability \cite{fan2006understanding}. This is plotted for each type of classifier, including the SVM model using a linear kernel. 
-For each trained model, we use it's accuracy score, F1 measure and the area under its ROC curve to evaluate overall performance\denes{do we report area as well anywhere?}.
-
 \begin{figure}[ht]
 \includegraphics[width=8.5cm]{plots/roccurves.pdf}
 \caption{ROC Learning Curves.}
@@ -110,6 +105,12 @@ For each trained model, we use it's accuracy score, F1 measure and the area unde
 \label{fig:roc}
 \centering
 \end{figure}
+
+Receiving operating characteristics (ROC) learning curves and the trade-off between precision and recall can be seen from Figs.~\ref{fig:roc}~and~\ref{fig:par}.
+\denes{Once these are replotted on single plots, we could try to comment on whether there is a noticeable difference}.
+%ROC curves demonstrate the performance of a classification model for all classification thresholds. The closer the apex of the curve is to the upper left hand corner, the greater the model's discriminatory ability \cite{fan2006understanding}. This is plotted for each type of classifier, including the SVM model using a linear kernel. 
+For each trained model, we use it's accuracy score, F1 measure and the area under its ROC curve to evaluate overall performance\denes{do we report area as well anywhere?}.
+
 
 \begin{figure}[ht]
 \includegraphics[width=8.5cm]{plots/parcurve.pdf}
