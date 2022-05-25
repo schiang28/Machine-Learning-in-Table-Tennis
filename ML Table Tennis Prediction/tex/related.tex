@@ -1,10 +1,14 @@
 \section{Background}
 %\subsection{Table tennis}
 %\denes{not sure about section headers, but it would make sense to separate out the background from the ML. Also, can we have citations for the data, please?}
-Table tennis is played competitively across the world. A table tennis match consists of a sequence of sets; in a professional singles match, the first player to win best of seven sets wins the match. In doubles (two teams of two players play against each other), the first team to win best of five sets wins the match. This paper will be looking at modelling professional singles matches only.
-In a set, the first player that earns at least eleven points and at least two more than their opponent wins the set. Each player serves twice before alternating, however, if the score reaches at least 10-10, each player serves only once before alternating.
-The sport has proven to be very popular, with more than three hundred million players worldwide. %, a large proportion residing in East Asia.
-The full set of rules are published by the International Table Tennis Federation (ITTF) \cite{ITTF}.
+Table tennis is played by hundreds of millions of people world-wide, with almost 40 000 professionals registered with the International Table Tennis Federation (ITTF). Games are fast-paced and highly technical, but there are  factors that make it attractive for mathematical modelling: matches have only two possible outcomes (there are no draws), and as an individual sport, there is no need to consider team line-ups.
+
+A table tennis match consists of a sequence of sets; in a professional singles match, the first player to win best of seven sets wins the match. 
+%In doubles (two teams of two players play against each other), the first team to win best of five sets wins the match. 
+This paper will be looking at modelling professional singles matches only.
+In a set, the first player that earns at least eleven points and at least two more than their opponent wins the set. Each player serves twice before alternating, however, if the score reaches at least 10-10, each player serves only once before alternating.  
+%The sport has proven to be very popular, with more than three hundred million players worldwide. %, a large proportion residing in East Asia.
+The full set of rules are published by the ITTF \cite{ITTF}.
 
 \section{Related Work} \label{sec:relatedwork}
 \subsection{Machine Learning}
@@ -17,7 +21,7 @@ The problem of predicting a table tennis match can be thought of as a supervised
 \subsection{ML in Sports}
 %\todo{A general overview of ML in sports}
 
-In the past, manual data collection methods for sports have typically proven time consuming and prone to human error and bias. Recent improvements in data capture has sparked interest in automatic data collection and analysis for a range of sports. Xing \etal \cite{xing2010multiple} proposed a dual-mode two-way Bayesian inference approach to track multiple highly dynamic and interactive players from videos in team sports such as basketball, football and hockey. Claudino \etal \cite{claudino2019current} used different ML methods, such as neural networks and decision tree classifiers, to investigate injury risk and performance in football, basketball, handball and volleyball. Davoodi and Khanteymoori \cite{davoodi2010horse} used neural networks for horse racing prediction, where eight features were used as input nodes to each neural network. This included information such as horse weight and race distance, to predict the eventual finishing time and rank of every horse in a race. 
+In the past, manual data collection methods for sports have typically proven time-consuming and prone to human error and bias. Recent improvements in data capture has sparked interest in automatic data collection and analysis for a range of sports. Xing \etal \cite{xing2010multiple} proposed a dual-mode two-way Bayesian inference approach to track multiple highly dynamic and interactive players from videos in team sports such as basketball, football and hockey. Claudino \etal \cite{claudino2019current} used different ML methods, such as neural networks and decision tree classifiers, to investigate injury risk and performance in football, basketball, handball and volleyball. Davoodi and Khanteymoori \cite{davoodi2010horse} used neural networks for horse racing prediction, where eight features were used as input nodes to each neural network. This included information such as horse weight and race distance, to predict the eventual finishing time and rank of every horse in a race. 
 
 % quite interesting, but potentially too much about horses
 %Some horses lacked performance data, and had to be excluded from the analysis.
@@ -26,22 +30,25 @@ In the past, manual data collection methods for sports have typically proven tim
 %therefore it would not be adequate to use it's history for prediction. As such, these horses had to be removed from the dataset to achieve better results.
 
 Applications of ML in sports can help with players and performance analysts in identifying critical factors that contribute to winning. Appropriate tactics can be identified in maximising player performance.
-Aside from formulating strategies to win matches, using machine learning methods for sport result prediction has become popular due the expanding domain in betting \cite{bunker2019machine}, which necessitates high predictive accuracy. Other applications include automated scouting and recruitment \cite{bunker2019machine} and umpiring assistance \cite{vzemgulys2018recognition}. \denes{Again, if we could baseline against some betting odds, that would be a fun evaluation}
+Aside from formulating strategies to win matches, using machine learning methods for sport result prediction has become popular due the expanding domain in betting \cite{bunker2019machine}, which necessitates high predictive accuracy. Other applications include automated scouting and recruitment \cite{bunker2019machine} and umpiring assistance \cite{vzemgulys2018recognition}.
 
 
 \subsection{Prediction in Tennis}
-For tennis, Knottenbelt \etal \cite{knottenbelt2012common} proposed a common opponent model to find a pre-play estimate of the probability of a player winning a professional singles \textit{tennis} match. This was achieved by analysing match statistics for opponents that both players encountered in the past.%, which provided for a fair basis comparison. 
-The model computed the probability of each player winning a point on their serve, and hence the match. The authors claimed an approximate return of investment of 6.85\% when put into the betting market for over four major tennis tournaments in 2011. \denes{What was their accuracy?} \denes{would it be easy to adapt and eval their common opponent model for table tennis? That would be a cool base line as well}
+A number of data-driven models are available for tennis. 
+Clarke and Dyte \cite{clarke2000using} predicted the outcome of professional tennis matches with 61--69\% accuracy using player rating points. Mapping player ability to a single rank can fail to capture complex factors, especially when comparing lower-rated players. In our paper we consider more complex features.
 
-Barnett and Clarke \cite{barnett2005combining} use historical data from past matches to predict the probability of a player winning a single point. Clarke and Dyte \cite{clarke2000using} use a year's worth of tournament results to predict the outcome of a match using player rating points. Such an approach which maps player ability to a single rank can fail to capture more complex factors, such as  a player's susceptibility to a certain skill or strategy. In this paper we demonstrate the benefits of using more complex features in the similar sport of table tennis.
+Barnett and Clarke \cite{barnett2005combining} use rich historical data to predict the probability of a player winning a single point, building up a Markov chain to predict the winner of a match. The authors' approach is compelling, but there is no published data on the accuracy of their model on a larger dataset.
+
+Knottenbelt \etal \cite{knottenbelt2012common} proposed a common opponent model to find a pre-play estimate of winning a match. This was achieved by analysing match statistics for opponents that both players encountered in the past. %, which provided for a fair basis comparison. 
+The model computed the probability of each player winning a point on their serve, and hence the match. The authors found a 59--77\% accuracy, with an estimated return of investment of 6.85\% when put into the betting market for over four major tennis tournaments in 2011. 
 
 %Due to similarities between tennis and table tennis, certain concepts can be applied from works that have been conducted in tennis.
 
 %Both are ideal sports to apply hierarchical probability models to; a table tennis match consists of a sequence of sets, which consists of a sequence of points.
 
 \subsection{ML in Table tennis}
-In table tennis, ML applications have focused so far on computer vision and automated data collection. % and  a number of computer vision based approaches have been applied. 
-Voeikov \etal \cite{voeikov2020ttnet} proposed a neural network (TTNet) that allowed for real-time processing of high-resolution table tennis videos. This can extract temporal and spatial data, such as ball detection and in-game events, and is potentially capable of substituting manual data collection by sport scouts, in addition to assisting with referee decision making. Zhang \etal \cite{zhang2010visual} are able to compute the 3D coordinates of a table tennis ball by its image coordinates. This allows the trajectory, the landing and striking point to be calculated.
+In table tennis, ML research has focused so far on computer vision and automated data collection. % and  a number of computer vision based approaches have been applied. 
+Voeikov \etal \cite{voeikov2020ttnet} proposed a neural network (TTNet) that allowed for real-time processing of high-resolution table tennis videos. They extract temporal and spatial data, such as ball detection and in-game events,  potentially replacing manual data collection by sport scouts. The model can also assist referees. More recently, Zhang \etal \cite{zhang2010visual} used computer vision to allow a robot to play table tennis. They computed the 3D coordinates of a table tennis ball from a pair of video feeds to estimate the trajectory, the landing and striking point.
 
 We build on these existing works by utilising data by Voeikov \etal \cite{voeikov2020ttnet}, and apply it to the yet unexplored problem of supervised table tennis match prediction.
 %, however, this study does not extend to predicting the match outcome.

@@ -14,11 +14,11 @@
 %% \currentdate{xxxx 00, 0000}
 %% \doiinfo{TQE.2020.Doi Number}
 \title{Supervised Learning for Table Tennis Match Prediction}
-\author{\IEEEauthorblockN{Yuhung Sophie Chiang}, and
+\author{\IEEEauthorblockN{Yu-hung Sophie Chiang}, and
     Gyorgy Denes\,\orcidlink{0000-0003-4792-9100}
 
 \thanks{Manuscript submitted for review on  June 2nd 2022} 
-\thanks{Sophie Chiang and Gyorgy Denes are with the Perse School, Hills Rd, Cambridge CB2 8QF, UK (correspondence email: gdenes@perse.co.uk)}
+\thanks{Yu-hung Sophie Chiang and Gyorgy Denes are with the Perse School, Hills Rd, Cambridge CB2 8QF, UK (correspondence email: gdenes@perse.co.uk)}
 }
 
 \markboth{Journal of IEEE Transactions on Artificial Intelligence, Vol. 00, No. 0, Month 2022}
@@ -32,19 +32,23 @@
 %\pagestyle{plain}
 
 \begin{abstract}
-Machine learning has shown to be useful in many different fields of classification and prediction. Sport analytics is an increasingly popular application, but most existing work is focused on \denes{What is the main focus? I'm guessing mainstream sports or automated fitness?}. Research on other sports, such as table tennis, are only recently gaining more traction. In this paper, we evaluate a range of existing supervised machine learning models to find a reliable predictor for the outcome of a table tennis match. Player and match statistics from data on historical matches were used to predict the outcome. We also derive 12 features and demonstrate their utility in an ablation study. We found that using logistic regression yielded the best overall performance on the test data \denes{an idea: can we baseline this against any other method (other than pure luck? E.g. can we baseline against betting odds?}.
+Machine learning, classification and prediction models have applications across a range of fields. Sport analytics is an increasingly popular application, but most existing work is focused on automated refereeing in mainstream sports and injury prevention.
+%\denes{What is the main focus? I'm guessing mainstream sports or automated fitness?}.
+Research on other sports, such as table tennis, are only recently gaining more traction. In this paper, we evaluate a range of existing supervised machine learning models to find a reliable predictor for the outcome of a table tennis match. Player and match statistics from data on historical matches were used to predict the outcome. We also derive 12 features and demonstrate their utility in an ablation study. We found that using logistic regression performed best on the test data, although differences between models were not always significant.  Our results match the accuracy of state-of-the-art in comparable sports, such as tennis.
 \end{abstract}
 
 \begin{IEEEImpStatement}
 The use of supervised learning models has been proposed for outcome prediction in a number of sports; however, there has been little research done for table tennis. This paper extends the application field in this direction, rigorously evaluating existing models. Furthermore, we also present a set of additional features which increase model accuracy, as validated in the ablation study. The results can serve as a baseline for future table tennis prediction models, and can feed back to prediction research in similar ball sports.
 \end{IEEEImpStatement}
 
-\denes{If not IEEE TAI, we could consider:
+
+\if{false}  % Feel free to add here, but removing from manuscript
+If not IEEE TAI, we could consider:
 \begin{itemize}
     \item{Computers \& Mathematics with Applications (Elsevier)}
-    \item{...}
+    \item{\sophie{MLSA 2022 : Machine Learning and Data Mining for Sports Analytics}}
 \end{itemize}
-}
+\fi
 
 % GXD: roughly the structure I was thinking, but feel free to tweak/move bits
 \input{tex/introduction}

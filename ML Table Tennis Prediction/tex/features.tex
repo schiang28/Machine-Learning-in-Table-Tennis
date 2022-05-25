@@ -1,4 +1,4 @@
-\section{Feature Engineering \& Selection} \label{features}
+%\section{Features} \label{sec:features}
 % Dr Denes: can keep, but removed for now to condense
 %Rich data is valuable, however, irrelevant or redundant variables can increase both training and inference time, as well as decrease a model's performance, therefore choosing appropriate features to input into a classification model is very important.
 
@@ -21,17 +21,17 @@ We represent each match from a participating player's perspective as follows:
 
 
 
-With incomplete matches removed from the dataset, there are no other possible outcomes (i.e. no draws) in table tennis. Each match maps to two ($\underline{x}$,$y$) pairs, from the perspective of the two participating players.
+With incomplete matches removed from the dataset, there are no other possible outcomes (i.e. no draws in table tennis). Each match maps to two ($\underline{x}$,$y$) pairs, from the perspective of the two participating players.
 %As any incomplete matches were removed from the dataset, 
 
 \subsection{Feature Engineering}
 \label{sec:engineer}
-In addition to the features extracted from the dataset in Section \ref{sec:dataset}, we combined players' statistics to form new features \cite{barnett2005combining}. We combine table tennis-specific domain knowledge with the approaches of Sipko and Knottenbelt \cite{sipko2015machine} and Cornman \etal \cite{cornman2017machine}, who all use features calculated as differences to predict the outcome of a \textit{tennis} match.
+We followed the approaches taken in \textit{tennis}  \cite{barnett2005combining,sipko2015machine,cornman2017machine}  to form new features for table tennis. These features are player-focused, as unlike in team sports, we do not need to consider line-ups, collective team ability or substitutions.
 
 %Using pre-existing knowledge on the sport, adding combinations of player statistics as features may improve the predictive model. These features were calculated as differences between different player statistics as this considers the characteristics of \textit{both} players participating in a match. This was inspired by 
 
 %In table tennis, there are only two possible outcomes of a match; a win or a loss. 
-Unlike in team sports, a combination of players with each of varying individual ability and skill level do not need to be considered in the predictive outcome. Due to this, the likelihood of player substitutions nor offensive and defensive combinations do not need to be analysed.
+
 
 Table~\ref{table:nonlin} shows the final  set of features. Newly derived features are indicated with *. More detailed explanations can be found in subsections below.
 %\ref{sec:sp} to \ref{sec:balance}.
@@ -92,7 +92,7 @@ The proportion of points won on a forehand by a player, determined by the type o
 The proportion of points won on a backhand by a player. \figref{fvbh} shows one player won 43 points on a backhand, and the other winning 29.
 
 \subsubsection*{RANK} \label{sec:rank}
-The ranking of the player, which is established by ITTF \cite{ITTF}.
+The ranking of the player by ITTF 
 %\denes{who establishes the ranking? ITTF?}
 
 \subsubsection*{RANKDIFF*: Rank Difference} \label{sec:rankdiff}
@@ -103,7 +103,7 @@ Constructed by calculating the difference between rankings of two opponents:
 \text{RANK}_j - \text{RANK}_i &\text{for player $j$},
 \end{cases}
 \end{equation}
-where RANK$_i$ and RANK$_j$ are respective player rankings at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's ), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked above 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
+where RANK$_i$ and RANK$_j$ are respective player rankings at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked above 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
 
 
 \subsubsection*{SA*, SRA*, HA*} \label{sec:advantage}
@@ -111,10 +111,12 @@ The serve advantage of a player is calculated as the difference between their se
 
 \subsubsection*{BALANCE*} \label{sec:balance}
 
-Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game. We propose measuring the overall well-roundness of a player's ability as the average of serve, short rally and forehand advantage:
+Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game. We propose measuring the overall well-roundness of a player as:
 \begin{equation}
     \textit{BALANCE} = \frac{|\textit{SA}|+|\textit{SRA}|+|\textit{FHA}|}{3}.
 \end{equation}
+
+\denes{please see if we can refit the model with player profiles based on aggregate match data; or alternatively plot these features as they progress through time so we can argue that this still allows us to do during-match prediction}
 
 \subsection{Feature Scaling}
 To account for the varying numerical range of the input features, and to make features comparable, we standardise each input to a zero mean with a unit standard deviation.

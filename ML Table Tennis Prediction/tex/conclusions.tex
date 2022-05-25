@@ -1,10 +1,11 @@
 \section{Conclusion and Future Work} \label{sec:conc}
-Machine learning has proved suitable for solving numerous previously impossible tasks. In this paper, we explore how supervised classification models could be used to predict the results of table tennis matches. 
-This paper evaluates diligently a number of state-of-the-art classification models using 5-fold cross-validation and hyperparameter tuning. The original dataset was retrieved from OSAI \cite{OSAI}. We also propose using a handful of engineered features, from which a non-linear RANKDIFF has been proved to be the most salient in our ablation study.
-When taking into consideration accuracy and F1 score on the validation and test set, combined with the area under it's ROC curve, it seems that logistic regression has achieved the highest overall score. However, the difference between models was often modest. Other considerations when picking a model for similar applications could include training time or model transparency (at both of which random forests excel).
+Machine learning has proved suitable for solving numerous previously impossible tasks. In this paper, we explore how supervised classification models could be used to predict the results of table tennis matches.  The original dataset was retrieved from OSAI \cite{OSAI}.
+
+We evaluate a number of state-of-the-art classification models (logistic regression, random forest classification, SVMs, multi-layer perceptrons) using 5-fold cross-validation and hyperparameter tuning. We also propose using a handful of engineered features, from which a non-linear RANKDIFF has been proved to be the most salient in our ablation study.
+
+On the test set, it seems that logistic regression has achieved the highest overall score (72\% accuracy, 0.706 F1). However, the difference between models was often modest. Our results are comparable to the accuracy of state-of-the-art \textit{tennis} prediction models. Other considerations when picking a model for similar applications could include training time or model transparency (at both of which random forests excel). 
 %Future works could focus on a selection of the most important features established from the random forest model.
-Future work could explore combining TTNet with our prediction model to provide updated live match predictions. It would be also an interesting test of the model to see how its predictions compare to betting odds. As automated table tennis analytics are becoming available below professional leagues, the authors are also interested whether the importance of features and the model choice transfers to these matches as well.
 
-\denes{I just have one more question which occurred to me while re-reading the paper. When predicting the outcome of the match, do you take into account all the stats of that given match (e.g. serves won etc.), or do you just look at the history of the players?(or is it a bit of both?)}
+Future work could explore combining TTNet with our prediction model to provide updated live match predictions. It would be also interesting to test the against real betting odds. As automated table tennis analytics are becoming available below professional leagues, the authors are also interested whether the importance of features and the model choice transfers to these matches as well.
 
-\todo{7.5 pages --- should we aim for a briefs manuscript (6 pages?)}
+
