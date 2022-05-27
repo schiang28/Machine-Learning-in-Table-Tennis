@@ -117,6 +117,44 @@ Players of a higher skill level tend to have fewer weaknesses and are stronger i
 \end{equation}
 
 \denes{please see if we can refit the model with player profiles based on aggregate match data; or alternatively plot these features as they progress through time so we can argue that this still allows us to do during-match prediction}
+\sophie{I've plotted how different features vary over time, they seem to converge probably around the second to third set. Thoughts? I've also averaged out all features from past matches for each player and used those values for prediction on the test set for pre-match prediction.
+This also means pre-match predictions can't be made for new players.}
+
+\begin{figure}[ht]
+\centering
+
+%\vspace{-2em}
+\includegraphics[width=8cm]{plots/featuresandtime.pdf}
+\caption{Features plotted against the course of the match for both players.}
+
+\label{fig:time}
+\end{figure}
+
+\begin{table}[ht]
+\caption{Pre-match prediction model performance}
+\label{prematch}
+\centering
+\setlength{\tabcolsep}{10pt}
+\scalebox{1.05}{%
+\begin{tabular}{ l|c c }
+
+\multirow{2}{4em}{Model} &
+\multicolumn{2}{|c}{Test set} \\
+\cline{2-3} & Acc & F1 \\
+
+\hline \hline 
+Logistic Regression & 0.639 & 0.667 \\
+Random Forest & 0.667 & 0.714 \\
+Support Vector Machine & & \\
+$\rightarrow$ Linear & 0.639 & 0.667 \\
+$\rightarrow$ RBF    & 0.639 & 0.649 \\
+$\rightarrow$ Polynomial & 0.611 & 0.632\\
+$\rightarrow$ Sigmoid & 0.639 & 0.649 \\
+MLP Neural Network & 0.667 & 0.714\\
+[1ex]
+\hline
+\end{tabular}}
+\end{table}
 
 \subsection{Feature Scaling}
 To account for the varying numerical range of the input features, and to make features comparable, we standardise each input to a zero mean with a unit standard deviation.

@@ -36,29 +36,18 @@ For logistic regression, the type of solver, penalty function and the $C$  terms
 %\textit{Regularisation} prevents overfitting of training data by penalising large weights when training a logistic regression predictor, and the parameter $C$ mentioned is used to control the effect of this\cite{ahmadian1998regularisation}. 
 the lower the value of $C$, the stronger the effect of regularisation. We found that  $C=1.0$, and `liblinear' solver resulted in the best average accuracy.
 
-$l1$ regularisation penalises the sum of absolute values of weights, whereas $l2$ regularisation penalises the sum of squares of the weights \cite{ahmadian1998regularisation}. For our data, $l2$ regularisation gave the best results (Fig. \ref{fig:learningcurve}).
-%\denes{Could we plot l1 vs l2 here? That would be quite convincing}.
-
-For SVMs, the two main hyperparameters that were adjusted were the kernel type and penalty value $C$. Using a linear kernel and and $C=0.2$ gave the highest F1 score on the test set compared to other kernels. The learning curve for an SVM model using a linear kernel is shown in Figure \ref{fig:learningcurve}.
-
-\begin{figure}[ht]
+\begin{figure}[H]
 \includegraphics[width=8.5cm]{plots/learningcurves.pdf}
 \caption{Logistic regression and linear kernel SVM Learning Curve.}
 \label{fig:learningcurve}
 \centering
 \end{figure}
 
+$l1$ regularisation penalises the sum of absolute values of weights, whereas $l2$ regularisation penalises the sum of squares of the weights \cite{ahmadian1998regularisation}. For our data, $l2$ regularisation gave the best results (Fig. \ref{fig:learningcurve}).
+%\denes{Could we plot l1 vs l2 here? That would be quite convincing}.
 
-\begin{figure*}[h]
-\centering
-\includegraphics[width=18cm]{plots/confusionmatrices.pdf}
-\vspace{-1em}
-\caption{Confusion matrices comparing the predicted and actual outcomes of test cases for each trained model.}
-%\denes{Please reduce outside margins and consider removing the legend}}
 
-\label{fig:confusionmatrices}
-\centering
-\end{figure*}
+For SVMs, the two main hyperparameters that were adjusted were the kernel type and penalty value $C$. Using a linear kernel and and $C=0.2$ gave the highest F1 score on the test set compared to other kernels. The learning curve for an SVM model using a linear kernel is shown in Figure \ref{fig:learningcurve}.
 
 \section{Experimental Results} \label{experresults}
 Our main results are reported in Table~\ref{results} and \figref{confusionmatrices}.
@@ -111,14 +100,3 @@ Receiving operating characteristics (ROC) learning curves can be seen in \figref
 
 %ROC curves demonstrate the performance of a classification model for all classification thresholds. The closer the apex of the curve is to the upper left hand corner, the greater the model's discriminatory ability \cite{fan2006understanding}. This is plotted for each type of classifier, including the SVM model using a linear kernel. 
 %For each trained model, we use it's accuracy score, F1 measure and the area under its ROC curve to evaluate overall performance\denes{do we report area as well anywhere?}.
-
-
-%\begin{figure}[ht]
-%\includegraphics[width=8.5cm]{plots/parcurve.pdf}
-%\caption{Precision and Recall Curves.}
-%\denes{As discussed, please replot without axis / bigger fonts or single plot}}
-
-%\label{fig:par}
-%\centering
-%\end{figure}
-
