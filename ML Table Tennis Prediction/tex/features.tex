@@ -3,17 +3,17 @@
 %Rich data is valuable, however, irrelevant or redundant variables can increase both training and inference time, as well as decrease a model's performance, therefore choosing appropriate features to input into a classification model is very important.
 
 \subsection{Match Representation}
-We represent each match from a participating player's perspective as follows:
+We represent each match ($i$) from a participating player's ($player_p$) perspective as follows:
 %In supervised machine learning, a set of labelled data is required for the model to train on. In the context of table tennis prediction, each match corresponded to two instances of data, one from the perspective of each player respectively, where every sample is composed of two elements:
 \begin{itemize}
-    \item a feature vector ($\underline{x}$) consisting of player and previous match statistics,
+    \item a feature vector ($\underline{x}_i$) consisting of player and  match statistics,
     \item{
      the target variable ($y$), indicating the result of the match: %that corresponds to its respective sample
      \begin{equation}
-        y =
+        y_i =
         \begin{cases}
-        1, &\text{if $player_i$ wins} \\ 
-        -1, &\text{if $player_i$ loses}
+        1, &\text{if $player_p$ wins} \\ 
+        -1, &\text{if $player_p$ loses}
         \end{cases}.
     \end{equation}
      }
@@ -21,7 +21,7 @@ We represent each match from a participating player's perspective as follows:
 
 
 
-With incomplete matches removed from the dataset, there are no other possible outcomes (i.e. no draws in table tennis). Each match maps to two ($\underline{x}$,$y$) pairs, from the perspective of the two participating players.
+With incomplete matches removed from the dataset, there are no other possible outcomes (there are no draws in table tennis). Each match actually maps to two ($\underline{x_i}$,$y_i$) pairs, from the perspective of the two participating players.
 %As any incomplete matches were removed from the dataset, 
 
 \subsection{Feature Engineering}
@@ -33,10 +33,10 @@ We followed the approaches taken in \textit{tennis}  \cite{barnett2005combining,
 %In table tennis, there are only two possible outcomes of a match; a win or a loss. 
 
 
-Table~\ref{table:nonlin} shows the final  set of features. Newly derived features are indicated with *. More detailed explanations can be found in subsections below.
+Table~\ref{table:nonlin} shows the final  set of features. Newly derived features are indicated with *. More detailed explanations can be found in the subsections below.
 %\ref{sec:sp} to \ref{sec:balance}.
 
-\begin{table}[ht]
+\begin{table}[b]
 \caption{Feature Summary} % title of Table
 \centering % used for centering table
 \setlength{\tabcolsep}{3pt}
@@ -86,76 +86,51 @@ The proportion of points won on a long rally by a player to the total number of 
 Compared to LRP, this is the proportion of points won on a \textit{short rally} by a player. E.g. \figref{svlr} shows that one player won 21 points on a short rally, while the other won 24 in the entire match.
 
 \subsubsection*{FHP: Forehand Percentage}\label{sec:fp}
-The proportion of points won on a forehand by a player, determined by the type of stroke used on the winning shot of a rally. \figref{fvbh} shows one player won 24 points on a forehand, and the other winning 38.
+The proportion of points won on a forehand by a player, determined by the type of stroke used on the winning shot of a rally. \figref{svlr} shows one player won 24 points on a forehand, and the other winning 38.
 
 \subsubsection*{BHP: Backhand Percentage}\label{sec:bp}
-The proportion of points won on a backhand by a player. \figref{fvbh} shows one player won 43 points on a backhand, and the other winning 29.
+The proportion of points won on a backhand by a player. \figref{svlr} shows one player won 43 points on a backhand, and the other winning 29.
 
 \subsubsection*{RANK} \label{sec:rank}
 The ranking of the player by ITTF 
 %\denes{who establishes the ranking? ITTF?}
 
 \subsubsection*{RANKDIFF*: Rank Difference} \label{sec:rankdiff}
-Constructed by calculating the difference between rankings of two opponents:
+%Constructed by calculating the difference between rankings of two opponents:
 \begin{equation}
     \text{RANKDIFF} = \begin{cases}
-\text{RANK}_i - \text{RANK}_j &\text{for player $i$} \\
-\text{RANK}_j - \text{RANK}_i &\text{for player $j$},
+\text{RANK}_a - \text{RANK}_b &\text{for player $a$} \\
+\text{RANK}_b - \text{RANK}_a &\text{for player $b$},
 \end{cases}
 \end{equation}
-where RANK$_i$ and RANK$_j$ are respective player rankings at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and rank 7 is much more likely to have an accurate depiction of their standard in comparison to two players of rank 150 and 155, despite the rank difference being the same. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked above 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
+where RANK$_a$ and RANK$_b$ are  player rankings for payers $a$ and $b$ at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and  7 are more likely to have an accurate depiction of their relative ability than players  150 and 155, despite the difference being identical. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked over 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
 
 
 \subsubsection*{SA*, SRA*, HA*} \label{sec:advantage}
-The serve advantage of a player is calculated as the difference between their serve and receive winning percentage. This depicts the contrast as to how likely a player is to win a point if they are serving rather than if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated therefrom.
+Serve advantage is calculated as the difference between their serve and receive winning percentage. This shows how likely a player is to win a point if they are serving rather than if they are on receive. Subsequently, the advantage a respective player has in a short rally over a long rally, as well as the advantage a respective player has in a forehand stroke over a backhand stroke, can be calculated.
 
 \subsubsection*{BALANCE*} \label{sec:balance}
 
-Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game. We propose measuring the overall well-roundness of a player as:
+Players of a higher skill level tend to have fewer weaknesses and are stronger in more aspects of the game. We propose measuring the overall well-roundness as:
 \begin{equation}
     \textit{BALANCE} = \frac{|\textit{SA}|+|\textit{SRA}|+|\textit{FHA}|}{3}.
 \end{equation}
 
-\denes{please see if we can refit the model with player profiles based on aggregate match data; or alternatively plot these features as they progress through time so we can argue that this still allows us to do during-match prediction}
-\sophie{I've plotted how different features vary over time, they seem to converge probably around the second to third set. Thoughts? I've also averaged out all features from past matches for each player and used those values for prediction on the test set for pre-match prediction.
-This also means pre-match predictions can't be made for new players.}
 
-\begin{figure}[ht]
+\subsection{Feature Scaling}
+To account for the varying numerical range of the input features, and to make features comparable, we standardize each input to a zero mean with a unit standard deviation.
+%Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}. We get a coded value by subtracting the mean of the sample from the data and dividing it by the standard deviation. The feature representing rank difference for example, is represented across a much larger range compared to features which are percentages.
+
+\begin{figure}[b]
 \centering
-
 %\vspace{-2em}
 \includegraphics[width=8cm]{plots/featuresandtime.pdf}
-\caption{Features plotted against the course of the match for both players.}
-
+\caption{Illustration of how individual features stabilize after a relatively short time on an example match. P1 and P2 correspond to the perspective of the two participating players.}
 \label{fig:time}
 \end{figure}
 
-\begin{table}[ht]
-\caption{Pre-match prediction model performance}
-\label{prematch}
-\centering
-\setlength{\tabcolsep}{10pt}
-\scalebox{1.05}{%
-\begin{tabular}{ l|c c }
+\subsection{Live vs. aggregate data}
 
-\multirow{2}{4em}{Model} &
-\multicolumn{2}{|c}{Test set} \\
-\cline{2-3} & Acc & F1 \\
+Each feature vector $\underline{x}_i$ represents a single match $i$ from a $p$ player's perspective with several features observed during that game ( SP, RP, LRP, SRP, FHP, VHP, SA*, SRA*, FHA*, BALANCE*). We postulate that the result of a match can be predicted from live in-match data well before the game ends, which is supported by the quick convergence of features as illustrated on an example match in \figref{time}. Hence, we fit our models on $(\underline{x}_i,y_i)$ pairs. However, we also validate the performance of these fitted models on pre-match prediction, when the feature vector $\underline{x}_i$ is averaged over all matches of player $p$ except for the target match.
 
-\hline \hline 
-Logistic Regression & 0.639 & 0.667 \\
-Random Forest & 0.667 & 0.714 \\
-Support Vector Machine & & \\
-$\rightarrow$ Linear & 0.639 & 0.667 \\
-$\rightarrow$ RBF    & 0.639 & 0.649 \\
-$\rightarrow$ Polynomial & 0.611 & 0.632\\
-$\rightarrow$ Sigmoid & 0.639 & 0.649 \\
-MLP Neural Network & 0.667 & 0.714\\
-[1ex]
-\hline
-\end{tabular}}
-\end{table}
 
-\subsection{Feature Scaling}
-To account for the varying numerical range of the input features, and to make features comparable, we standardise each input to a zero mean with a unit standard deviation.
-%Different features tend to have a varying range of values, therefore it is best practice to scale features as part of data pre-processing prior to learning. \textit{Standardization} is a scaling technique to centre values around the mean with a unit standard deviation \cite{bollegala2017dynamic}. We get a coded value by subtracting the mean of the sample from the data and dividing it by the standard deviation. The feature representing rank difference for example, is represented across a much larger range compared to features which are percentages.

@@ -13,37 +13,27 @@
 
 %\vspace{-2em}
 \includegraphics[width=8cm]{plots/tableheatmaplot.pdf}
-\caption{Distribution of ball placement of a winning shot for both players by region if each side of the table were to be split into nine equal parts. Each value indicates the number of balls landing in it's respective region \cite{OSAI}.}
+\caption{Location of the last bounce of the winning ball, summed over an example match. Each side of the table is split into nine equal parts. \cite{OSAI}.}
 
 \label{fig:pos}
 \end{figure}
 
 
-
-\begin{figure}[ht]
+\begin{figure}[t]
 \centering
-
 \includegraphics[width=8cm]{plots/forehandvsbackhand.pdf}
-\caption{Distribution of points won by forehand compared to a backhand \cite{OSAI}.}
-
-\label{fig:fvbh}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-
 \includegraphics[width=8cm]{plots/shortvslongrally.pdf}
-\caption{Distribution of points won by a short rather than long rally \cite{OSAI}.}
+\caption{Number of points won by forehand vs. backhand (top);  by a short vs. long rally (bottom) in an example match \cite{OSAI}.}
 
 \label{fig:svlr}
 \end{figure}
 
 \section{Dataset} \label{sec:dataset}
-Our primary source of data is automatic captures from TTNet \cite{voeikov2020ttnet}, released by OSAI \cite{OSAI}. We use Tokyo 2020 Olympics and Tischtennis-Bundesliga (German table tennis league) data, which include men and women's singles matches. Many potential features such as player age, rank, match duration as well as in-match statistics such as percentage of points won on serve and receive, stroke types and error types are available. Match progression can be plotted for each set, recording the location of each ball bounce (see \figref{sequence}).
+Our primary source of data are automatic captures from TTNet \cite{voeikov2020ttnet}, released by OSAI \cite{OSAI}. We use Tokyo 2020 Olympics and Tischtennis-Bundesliga (German table tennis league) data, which include men and women's singles matches. Potential features include player  rank and in-match statistics such as percentage of points won on serve and receive, stroke  and error types. Match progression can be plotted for each set, recording the location of each ball bounce (see \figref{sequence}).
 
 %Interactive maps that demonstrated the ball position of each shot on the table, as well as the stroke type were also accessible. The progression of a rally and location of each ball bounce can be mapped into a sequence (see \figref{sequence}).
 
-As the sequence of co-ordinates is not always intuitive to interpret, the whole rally can be instead reduced to the location of the winning shot. Furthermore, each half of the table can be split into nine equal sections, and the location of every winning shot of the match can be grouped into one of these parts (\figref{pos}). Further grouping can involve the number of forehands and the number of backhands used to win a point (\figref{fvbh}), or whether it was a `short' or `long' rally (\figref{svlr}). % The use of these features is discussed in  \secref{features}.
+To reduce the dimensionality of the problem, a rally can be represented as the location of the winning shot. Furthermore, each half of the table can be split into nine equal sections, and the location of winning shots can be grouped (\figref{pos}). Further grouping can involve the number of forehands and the number of backhands used to win a point, or whether it was a `short' or `long' rally (\figref{svlr}). % The use of these features is discussed in  \secref{features}.
 %\denes{which version? Fig 3 or 4?}.
 Samples with missing data entries were removed from the dataset.
 

@@ -3,44 +3,46 @@
 
 One qualitative advantage of using a random forest classifier is its training speed, which made hyperparameter tuning easier. The maximum number of levels in each decision tree was set to 80, the maximum number of features considered for splitting a node was set to 4, the minimum number of data points allowed in a leaf node was set to 4 and the number of trees that were in the classifier was set to 200.
 
-\begin{figure}[ht]
+\begin{figure}[t]
 
 \includegraphics[width=8.5cm]{plots/feature_importance.pdf}
 \caption{Importance of features from random forest classifier based on Gini impurity. In our dataset, RANKDIFF appears to be the most important feature.}
-%\denes{Can we put * on the derived features, please?}. }
-\vspace{-1em}
+
 \label{fig:fig4}
 \centering
 \end{figure}
 
-Another significant advantage of a random forest classifier is that the importance of features can also be extracted and visualised.  \figref{fig4} shows this as the the mean decrease in Gini impurity for features across all trees. The impurity of a node is the probability of a specific feature being classified incorrectly assuming that it is selected randomly \cite{cassidy2014calculating}.
+
+Another significant advantage of a random forest classifier is that the importance of features can also be extracted and visualized.  \figref{fig4} shows this as the mean decrease in Gini impurity for features across all trees. The impurity of a node is the probability of a specific feature being classified incorrectly assuming that it is selected randomly \cite{cassidy2014calculating}.
 
 \subsection{Ablation Study}
-\figref{fig4} predicts that the most important feature in a random forest model is  RANKDIFF, which justifies the inclusion of hand-crafted features. To reinforce this finding, we report the accuracy and F1 score for each model with and without the derived features (see \secref{engineer}). All scores are lower for models that don't use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. Detailed results  are in Table \ref{results2}.
 
-\begin{table}[ht]
-\caption{Model performance with and without newly derived features}
-\label{results2}
+\figref{fig4} predicts that the most important feature in a random forest model is  RANKDIFF, which justifies the inclusion of hand-crafted features. To reinforce this finding, we computed the accuracy and F1 score for each model with and without the derived features. All scores are lower for models that don't use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. See Table~\ref{results2}.
+
+
+
+To understand how well the trained model would perform when used purely as a pre-match predictor, we computed accuracy and F1 scores for aggregate feature vectors $\underline{x_i'}$ which contain the average features from all matches, excluding the target match $x_i$. Table~\ref{prematch} shows similar results to live prediction, with accuracy values of 61--67\%.
+\begin{table}[t]
+\caption{Pre-match prediction model performance}
+\label{prematch}
 \centering
-\setlength{\tabcolsep}{8pt}
+\setlength{\tabcolsep}{10pt}
 \scalebox{1.05}{%
-\begin{tabular}{ l|c c|c c }
+\begin{tabular}{ l|c c }
 
 \multirow{2}{4em}{Model} &
-\multicolumn{2}{|c|}{With} &
-\multicolumn{2}{|c}{Without} \\
-\cline{2-5}
-  & Acc & F1 & Acc & F1 \\
+\multicolumn{2}{|c}{Test set} \\
+\cline{2-3} & Acc & F1 \\
 
 \hline \hline 
-Logistic Regression & 0.699 & 0.705 & 0.631 & 0.668 \\
-Random Forest & 0.677 & 0.688 & 0.661 & 0.673 \\
+Logistic Regression & 0.639 & 0.667 \\
+Random Forest & 0.667 & 0.714 \\
 Support Vector Machine & & \\
-$\rightarrow$ Linear & 0.696 & 0.690 & 0.556 & 0.619 \\
-$\rightarrow$ RBF    & 0.700 & 0.677 & 0.500 & 0.591 \\
-$\rightarrow$ Polynomial & 0.705 & 0.685 & 0.500 & 0.640\\
-$\rightarrow$ Sigmoid & 0.705 & 0.690 & 0.472 & 0.642 \\
-MLP Neural Network & 0.696 & 0.708 & 0.639 & 0.683\\
+$\rightarrow$ Linear & 0.639 & 0.667 \\
+$\rightarrow$ RBF    & 0.639 & 0.649 \\
+$\rightarrow$ Polynomial & 0.611 & 0.632\\
+$\rightarrow$ Sigmoid & 0.639 & 0.649 \\
+MLP Neural Network & 0.667 & 0.714\\
 [1ex]
 \hline
 \end{tabular}}
