@@ -3,7 +3,7 @@
 
 One qualitative advantage of using a random forest classifier is its training speed, which made hyperparameter tuning easier. The maximum number of levels in each decision tree was set to 80, the maximum number of features considered for splitting a node was set to 4, the minimum number of data points allowed in a leaf node was set to 4 and the number of trees that were in the classifier was set to 200.
 
-\begin{figure}[t]
+\begin{figure}[ht]
 
 \includegraphics[width=8.5cm]{plots/feature_importance.pdf}
 \caption{Importance of features from random forest classifier based on Gini impurity. In our dataset, RANKDIFF appears to be the most important feature.}
@@ -15,11 +15,11 @@ One qualitative advantage of using a random forest classifier is its training sp
 
 Another significant advantage of a random forest classifier is that the importance of features can also be extracted and visualized.  \figref{fig4} shows this as the mean decrease in Gini impurity for features across all trees. The impurity of a node is the probability of a specific feature being classified incorrectly assuming that it is selected randomly \cite{cassidy2014calculating}.
 
+\input{tex/table_abl1}
+
 \subsection{Ablation Study}
 
-\figref{fig4} predicts that the most important feature in a random forest model is  RANKDIFF, which justifies the inclusion of hand-crafted features. To reinforce this finding, we computed the accuracy and F1 score for each model with and without the derived features. All scores are lower for models that don't use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. See Table~\ref{results2}.
-
-
+\figref{fig4} predicts that the most important feature in a random forest model is  RANKDIFF, which justifies the inclusion of hand-crafted features. To reinforce this finding, we computed the accuracy and F1 score for each model with and without the derived features. All scores are lower for models that do not use newly derived features, and accuracy score is significantly lower in SVMs compared to other models. See Table~\ref{results2}.
 
 To understand how well the trained model would perform when used purely as a pre-match predictor, we computed accuracy and F1 scores for aggregate feature vectors $\underline{x_i'}$ which contain the average features from all matches, excluding the target match $x_i$. Table~\ref{prematch} shows similar results to live prediction, with accuracy values of 61--67\%.
 \begin{table}[t]
