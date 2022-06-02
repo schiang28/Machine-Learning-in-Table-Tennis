@@ -4,11 +4,11 @@
 We evaluated four models (logistic regression, random forest, SVMs, MLPs) as implemented in  Scikit-Learn  \cite{pedregosa2011scikit}.
 
 \subsection{Logistic Regression}
-The logistic function maps the input feature $\underline{x}_i$ to a probability value $p$. Values over $0.5$ correspond to the player winning match $i$.  Training minimizes the \textit{logistic loss} function:
+The logistic function maps the input feature $\underline{x}_i$ to a probability value $p_i$. Values over $0.5$ correspond to the player winning match $i$.  Training minimizes the \textit{logistic loss} function \cite{hazan2014logistic}:
 \begin{equation}
-    (p) = -\frac{1}{n} \sum_{i=1}^n p_i \log(y_i) + (1-p_i)\log(1-y_i), 
+    (p) = -\frac{1}{n} \sum_{i=1}^n p_i \log \left( \frac{y_i + 1}{2} \right) + (1-p_i)\log \left( \frac{1-y_i}{2} \right), 
 \end{equation}
-where $n$ is number of matches, $p_i$ is the predicted probability of a player winning match $i$, and  $y_i$ is the actual outcome \cite{hazan2014logistic}. 
+where $n$ is number of matches, $p_i$ is the predicted probability of a player winning match $i$, and  $y_i$ is as defined in Eq.~\ref{eq:y}. 
 %$$
 %\begin{gathered}
 %    n = \text{number of matches} \\
@@ -35,7 +35,7 @@ An MLP is an artificial neural network consisting of an input layer ($\underline
 
 \begin{figure*}[h]
 \centering
-\includegraphics[width=18cm]{plots/confusionmatrices.pdf}
+\includegraphics[width=18cm]{plots/chiang6.pdf}
 \vspace{-1em}
 \caption{Confusion matrices comparing the predicted and actual outcomes of test cases for each trained model.}
 %\denes{Please reduce outside margins and consider removing the legend}}

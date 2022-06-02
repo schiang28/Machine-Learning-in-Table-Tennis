@@ -3,7 +3,7 @@
 %Rich data is valuable, however, irrelevant or redundant variables can increase both training and inference time, as well as decrease a model's performance, therefore choosing appropriate features to input into a classification model is very important.
 
 \subsection{Match Representation}
-We represent each match ($i$) from a participating player's ($player_p$) perspective as follows:
+We represent each match ($i$) from a participating player's ($P$) perspective as follows:
 %In supervised machine learning, a set of labelled data is required for the model to train on. In the context of table tennis prediction, each match corresponded to two instances of data, one from the perspective of each player respectively, where every sample is composed of two elements:
 \begin{itemize}
     \item a feature vector ($\underline{x}_i$) consisting of player and  match statistics,
@@ -12,9 +12,10 @@ We represent each match ($i$) from a participating player's ($player_p$) perspec
      \begin{equation}
         y_i =
         \begin{cases}
-        1, &\text{if $player_p$ wins} \\ 
-        -1, &\text{if $player_p$ loses}
+        1, &\text{if $P$ wins} \\ 
+        -1, &\text{if $P$ loses}
         \end{cases}.
+        \label{eq:y}
     \end{equation}
      }
 \end{itemize}
@@ -103,7 +104,7 @@ The ranking of the player by ITTF
 \text{RANK}_b - \text{RANK}_a &\text{for player $b$},
 \end{cases}
 \end{equation}
-where RANK$_a$ and RANK$_b$ are  player rankings for payers $a$ and $b$ at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and  7 are more likely to have an accurate depiction of their relative ability than players  150 and 155, despite the difference being identical. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked over 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
+where RANK$_a$ and RANK$_b$ are  player rankings for payers $a$ and $b$ at the time of the match. A rank advantage (i.e. lower numerical value than an opponent's), yields a negative RANKDIFF. Rankings are mostly reliable for the top players; for example, players of rank 2 and 7 are more likely to have an accurate depiction of their relative ability than players of rank 150 and 155, despite the difference being identical. To account for this, we apply a simple non-linearity and set RANKDIFF to $0$ for matches where both players are ranked over 100.%, the feature  is ignored ($=0$). This is due to the fact that the lower the rank of a player, the more likely it is that there will be other players of a similar standard where rank doesn't accurately represent the standard of a player.
 
 
 \subsubsection*{SA*, SRA*, HA*} \label{sec:advantage}
@@ -124,13 +125,13 @@ To account for the varying numerical range of the input features, and to make fe
 \begin{figure}[b]
 \centering
 %\vspace{-2em}
-\includegraphics[width=8cm]{plots/featuresandtime.pdf}
+\includegraphics[width=8cm]{plots/chiang4.pdf}
 \caption{Illustration of how individual features stabilize after a relatively short time on an example match. P1 and P2 correspond to the perspective of the two participating players.}
 \label{fig:time}
 \end{figure}
 
 \subsection{Live vs. aggregate data}
 
-Each feature vector $\underline{x}_i$ represents a single match $i$ from a $p$ player's perspective with several features observed during that game ( SP, RP, LRP, SRP, FHP, VHP, SA*, SRA*, FHA*, BALANCE*). We postulate that the result of a match can be predicted from live in-match data well before the game ends, which is supported by the quick convergence of features as illustrated on an example match in \figref{time}. Hence, we fit our models on $(\underline{x}_i,y_i)$ pairs. However, we also validate the performance of these fitted models on pre-match prediction, when the feature vector $\underline{x}_i$ is averaged over all matches of player $p$ except for the target match.
+Each feature vector $\underline{x}_i$ represents a single match $i$ from a $P$ player's perspective with several features observed during that game (SP, RP, LRP, SRP, FHP, VHP, SA*, SRA*, FHA*, BALANCE*). We postulate that the result of a match can be predicted from live in-match data well before the game ends, which is supported by the quick convergence of features as illustrated on an example match in \figref{time}. Hence, we fit our models on $(\underline{x}_i,y_i)$ pairs. However, we also validate the performance of these fitted models on pre-match prediction, when the feature vector $\underline{x}_i$ is averaged over all matches of player $p$ except for the target match.
 
 

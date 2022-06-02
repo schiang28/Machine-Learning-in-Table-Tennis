@@ -37,11 +37,11 @@ the lower the value of $C$, the stronger the effect of regularisation. We found 
 
 %\denes{Could we plot l1 vs l2 here? That would be quite convincing}.
 
-For SVMs, the two main hyperparameters that were adjusted were the kernel type and penalty value $C$. Using a linear kernel and and $C=0.2$ gave the highest F1 score on the test set compared to other kernels. The learning curve for an SVM model using a linear kernel is shown in Fig. \ref{fig:learningcurve}.
+For SVMs, the two main hyperparameters that were adjusted were the kernel type and penalty value $C$. Using a linear kernel and $C=0.2$ gave the highest F1 score on the test set compared to other kernels. The learning curve for an SVM model using a linear kernel is shown in Fig. \ref{fig:learningcurve}.
 
 \begin{figure}[H]
-\includegraphics[width=8.cm]{plots/learningcurves.pdf}
-\caption{Logistic regression and linear kernel SVM Learning Curves. The difference in F1 score for L1 and L2 regularisation is also illustrated.}
+\includegraphics[width=8.cm]{plots/chiang5.pdf}
+\caption{Logistic regression and linear kernel SVM learning curves. The difference in F1 score for L1 and L2 regularisation is also illustrated.}
 \label{fig:learningcurve}
 \centering
 \end{figure}
@@ -51,7 +51,7 @@ Our main results are reported in Table~\ref{results} and \figref{confusionmatric
 %The test set is completely left out from the training process of the model, and is only used during evaluation. This is to see how well models generalise to unseen data which replicate new match data, as the test set is never used before evaluation. During evaluation, all other data is used for training the model (training and validation).
 Both accuracy and F1 score are reported for the validation and test sets. The standard error for each score for the validation set is reported as a basis of defining uncertainty. The validation column shows that most models perform comparably with approx. 70\% accuracy. This value is also comparable to state-of-the-art metrics in \textit{tennis} match prediction.
 
-F1 scores indicate that MLP Neural Networks (with a \textit{relu} activation) slightly over-perform their competitors, but the difference is not significant. The hidden layer size was set to 2 and the maximum number of iterations the solver iterates was chosen to be 200. The solver for weight optimization is set to `lbfgs', a quasi-Newton optimizer. The learning rate for scheduling weight updates is set to constant. However, the generic layered structure of a neural network has proven to be time consuming. Additionally, this technique is considered a ``black box'' technology, and finding out why a neural network has outstanding or even poor performance is difficult \cite{noriega2005multilayer}.
+F1 scores indicate that MLP Neural Networks (with a \textit{relu} activation) slightly over-perform their competitors, but the difference is not significant. The hidden layer size was set to 2 and the maximum number of iterations the solver iterates was chosen to be 200. The solver for weight optimization is set to `lbfgs', a quasi-Newton optimizer. The learning rate for scheduling weight updates is set to constant. However, the generic layered structure of a neural network has proven to be time consuming. Additionally, this technique is considered a `black box' technology, and finding out why a neural network has outstanding or even poor performance is difficult \cite{noriega2005multilayer}.
 
 %On the test set, logistic regression seems to perform  noticeably better than other models. One interesting observation is that this is the only classifier that noticeably benefited the most from hyperparameter tuning. This might be partially due to the fact that we report the different kernels of SVMs separately.
 
@@ -60,7 +60,7 @@ F1 scores indicate that MLP Neural Networks (with a \textit{relu} activation) sl
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=8.cm]{plots/roccurves.pdf}
+\includegraphics[width=8.cm]{plots/chiang7.pdf}
 \caption{ROC Learning Curves for the overall performance of each model.}
 %\denes{As discussed, please replot without axis / bigger fonts. Or actually, why not do one single ROC plot (you have 4 colours anyway?}}
 
